@@ -8,11 +8,11 @@ if (!appName) {
 }
 
 const root = path.resolve(__dirname, "..");
-const templatePath = path.join(root, "apps", "template");
+const devPath = path.join(root, "apps", "dev");
 const newAppPath = path.join(root, "apps", appName);
 
-if (!fs.existsSync(templatePath)) {
-  console.error("❌ apps/template 이(가) 없습니다. 먼저 템플릿을 생성하세요.");
+if (!fs.existsSync(devPath)) {
+  console.error("❌ apps/dev 이(가) 없습니다. 먼저 템플릿을 생성하세요.");
   process.exit(1);
 }
 if (fs.existsSync(newAppPath)) {
@@ -21,7 +21,7 @@ if (fs.existsSync(newAppPath)) {
 }
 
 // 폴더 복사
-fs.cpSync(templatePath, newAppPath, { recursive: true });
+fs.cpSync(devPath, newAppPath, { recursive: true });
 
 // package.json name 변경
 const pkgPath = path.join(newAppPath, "package.json");
