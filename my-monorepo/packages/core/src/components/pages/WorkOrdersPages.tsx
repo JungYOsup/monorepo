@@ -407,11 +407,6 @@ export function WorkOrdersPage({
     onStepChange("progress");
   };
 
-  const handleBackToList = () => {
-    setSelectedWorkOrder(null);
-    onStepChange("list");
-  };
-
   const renderStepContent = () => {
     switch (currentStep) {
       case "list":
@@ -522,7 +517,6 @@ export function WorkOrdersPage({
           <WorkOrderDetailTemplate
             workOrder={selectedWorkOrder}
             onStartWork={handleStartWork}
-            onBack={handleBackToList}
           />
         ) : null;
 

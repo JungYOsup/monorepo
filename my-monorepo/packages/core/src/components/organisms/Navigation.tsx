@@ -86,6 +86,8 @@ const workOrderSteps = [
   },
 ];
 
+const PAGE_TITLE = "생산 시점 관리 시스템";
+
 export function Navigation({
   currentPage,
   currentStep,
@@ -124,7 +126,7 @@ export function Navigation({
         >
           <Group justify="space-between" p="md">
             <Text fw={600} size="lg">
-              공장 관리 시스템
+              {PAGE_TITLE}
             </Text>
             <Burger opened={opened} onClick={opened ? close : open} size="sm" />
           </Group>
@@ -249,7 +251,6 @@ export function Navigation({
                     />
                   );
                 })}
-
                 <Box
                   mt="lg"
                   p="sm"
@@ -287,8 +288,8 @@ export function Navigation({
     >
       <ScrollArea h="100%">
         <Stack gap="md" p="lg">
-          <Text fw={700} size="xl">
-            공장 관리 시스템
+          <Text fw={700} size="xl" ta={"center"}>
+            {PAGE_TITLE}
           </Text>
 
           <Stack gap="xs">

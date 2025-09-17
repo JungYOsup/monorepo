@@ -18,13 +18,11 @@ import { WorkOrderData } from "../organisms/WorkOrderCard";
 export interface WorkOrderDetailTemplateProps {
   workOrder: WorkOrderData;
   onStartWork: () => void;
-  onBack: () => void;
 }
 
 export function WorkOrderDetailTemplate({
   workOrder,
   onStartWork,
-  onBack,
 }: WorkOrderDetailTemplateProps) {
   // Mock detailed data
   const detailedData = {
@@ -58,16 +56,7 @@ export function WorkOrderDetailTemplate({
     <Container size="xl" p="md">
       <Stack gap="lg">
         {/* Header */}
-        <Group>
-          <Button
-            variant="subtle"
-            onClick={onBack}
-            leftSection={
-              <Icon name="chevronDown" style={{ transform: "rotate(90deg)" }} />
-            }
-          >
-            뒤로
-          </Button>
+        <Group justify="space-between" align="center">
           <Stack gap={0}>
             <Text fw={700} size="xl">
               {workOrder.productName}
