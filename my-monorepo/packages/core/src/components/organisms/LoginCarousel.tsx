@@ -1,7 +1,7 @@
+import { ImageWithFallback } from "@core";
 import { ActionIcon, Box, Group, Text, Title } from "@mantine/core";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { ImageWithFallback } from "../../../util/ImageWithFallback";
 
 const carouselData = [
   {

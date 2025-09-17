@@ -5,7 +5,7 @@ import {
   QualityResultsPage,
   WorkOrdersPage,
   WorkOrderStep,
-} from "@core/index";
+} from "@core";
 import { AppShell, Box, MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
 import { DatesProvider } from "@mantine/dates";
