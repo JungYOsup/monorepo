@@ -1,4 +1,4 @@
-import WorkOrderCard from "@core/components/workOrderCard/WorkOrderCard";
+import WorkOrderCard from "@core/components/organisms/workOrderCard/WorkOrderCard";
 import { SimpleGrid } from "@mantine/core";
 
 interface WorkOrder {
