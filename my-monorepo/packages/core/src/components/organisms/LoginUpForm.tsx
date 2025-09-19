@@ -1,4 +1,4 @@
-import { useAuthLoginAuthLoginPostMutation } from "@core/hooks/api/auth-login/useAuthLoginMutation";
+import { useDefaultAuthHandler } from "@core/handlers/login/useDefaultAuthHandler";
 import {
   Box,
   Button,
@@ -9,11 +9,9 @@ import {
   TextInput,
   Title,
 } from "@mantine/core";
-import { useLocalStorage } from "@mantine/hooks";
 import { IconLock, IconMail } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 interface LoginData {
   id: string;
@@ -21,44 +19,17 @@ interface LoginData {
 }
 
 export function LoginForm() {
-  const { mutate: LoginMutate } = useAuthLoginAuthLoginPostMutation();
-  const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useLocalStorage({
-    key: "isAuthenticated",
-    defaultValue: false,
-  });
-
+  const { handleLogin } = useDefaultAuthHandler();
   const [loginData, setLoginData] = useState<LoginData>({
     id: "",
     password: "",
   });
-
-  const [loading, setLoading] = useState(false);
 
   const handleInputChange =
     (field: keyof Omit<LoginData, "rememberMe">) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setLoginData((prev) => ({ ...prev, [field]: e.target.value }));
     };
-
-  const handleLogin = async () => {
-    LoginMutate({
-      authLoginPostRequest: {
-        identifier: loginData.id,
-        password: loginData.password,
-      },
-    });
-
-    setLoading(true);
-    // 로그인 로직 시뮬레이션
-    setTimeout(() => {
-      console.log("Login with:", loginData);
-      setLoading(false);
-    }, 1500);
-
-    navigate("/works");
-    setIsAuthenticated(true);
-  };
 
   const isFormValid = loginData.id && loginData.password;
 
@@ -107,12 +78,11 @@ export function LoginForm() {
               {/* Login Button */}
               <Button
                 size="lg"
-                onClick={handleLogin}
+                onClick={() => handleLogin(loginData)}
                 disabled={!isFormValid}
-                loading={loading}
                 mt="md"
               >
-                {loading ? "Signing in..." : "Sign In"}
+                {"Sign In"}
               </Button>
             </Stack>
           </motion.div>

@@ -16,7 +16,7 @@ import { useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useLocalStorage({
+  const [isAuthenticated] = useLocalStorage({
     key: "isAuthenticated",
   });
   const isUserAuthenticated = JSON.parse(isAuthenticated || "false");

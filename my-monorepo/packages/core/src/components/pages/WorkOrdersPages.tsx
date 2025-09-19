@@ -98,7 +98,7 @@ const mockWorkOrders: WorkOrderData[] = [
     id: "WO-006",
     productName: "전자 제어 모듈",
     productImage:
-      "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400",
+      "https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=400",
     lot: "LOT-2024-006",
     targetQuantity: 150,
     currentQuantity: 150,
@@ -146,7 +146,7 @@ const mockWorkOrders: WorkOrderData[] = [
     id: "WO-010",
     productName: "온도 센서 유닛",
     productImage:
-      "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400",
+      "https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=400",
     lot: "LOT-2024-010",
     targetQuantity: 200,
     currentQuantity: 200,
@@ -194,7 +194,7 @@ const mockWorkOrders: WorkOrderData[] = [
     id: "WO-014",
     productName: "모터 드라이브",
     productImage:
-      "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400",
+      "https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=400",
     lot: "LOT-2024-014",
     targetQuantity: 90,
     currentQuantity: 0,
@@ -242,7 +242,7 @@ const mockWorkOrders: WorkOrderData[] = [
     id: "WO-018",
     productName: "전력 변환기",
     productImage:
-      "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400",
+      "https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=400",
     lot: "LOT-2024-018",
     targetQuantity: 95,
     currentQuantity: 48,
@@ -326,7 +326,7 @@ const mockWorkOrders: WorkOrderData[] = [
     id: "WO-025",
     productName: "안전 스위치",
     productImage:
-      "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400",
+      "https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=400",
     lot: "LOT-2024-025",
     targetQuantity: 190,
     currentQuantity: 190,
