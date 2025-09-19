@@ -397,6 +397,7 @@ function writeFiles({ resource, instance, queries, mutations }) {
     "core",
     "src",
     "hooks",
+    "api",
     kebabCase(resource)
   );
   const hooksOutFile = path.join(

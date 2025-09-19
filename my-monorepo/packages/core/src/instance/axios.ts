@@ -10,8 +10,7 @@ import {
 } from "@sizlcorp/sizl-api-document/dist/models";
 import axios from "axios";
 
-export const BASE_URL =
-  process.env.REACT_APP_BASE_URL ?? "https://speedrack-mes3-api.sizl.co.kr";
+export const BASE_URL = "https://main-mes3-api.sizl.co.kr";
 
 export const axiosInstance: any = axios.create({
   baseURL: BASE_URL,

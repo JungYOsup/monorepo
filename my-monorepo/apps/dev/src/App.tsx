@@ -1,18 +1,26 @@
 import {
   InventoryPage,
+  LoginPage,
   Navigation,
   NavigationPage,
   QualityResultsPage,
+  UserHeader,
   WorkOrdersPage,
   WorkOrderStep,
 } from "@core";
-import { AppShell, Box, MantineProvider } from "@mantine/core";
+import { AppShell, Box } from "@mantine/core";
 import "@mantine/core/styles.css";
-import { DatesProvider } from "@mantine/dates";
 import "@mantine/dates/styles.css";
+import { useLocalStorage } from "@mantine/hooks";
 import { useState } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 export default function App() {
+  const [isAuthenticated, setIsAuthenticated] = useLocalStorage({
+    key: "isAuthenticated",
+  });
+  const isUserAuthenticated = JSON.parse(isAuthenticated || "false");
+
   const [currentPage, setCurrentPage] = useState<NavigationPage>("workorders");
   const [currentStep, setCurrentStep] = useState<WorkOrderStep>("list");
   const [workOrderStatus, setWorkOrderStatus] = useState<
@@ -78,41 +86,40 @@ export default function App() {
     }
   };
 
-  return (
-    <MantineProvider defaultColorScheme="light">
-      <DatesProvider settings={{ locale: "ko" }}>
-        <AppShell
-          navbar={{
-            width: {
-              base: 0, // Hidden on mobile (handled by Navigation component)
-              sm:
-                currentPage === "workorders" && currentStep !== "list"
-                  ? 200
-                  : 80, // Tablet
-              lg: 280, // Desktop
-            },
-            breakpoint: "sm",
-          }}
-          padding="0"
-        >
-          <AppShell.Navbar>
-            <Navigation
-              currentPage={currentPage}
-              currentStep={
-                currentPage === "workorders" ? currentStep : undefined
-              }
-              onPageChange={handlePageChange}
-              onStepChange={handleStepChange}
-              workOrderStatus={workOrderStatus}
-              stepCompletionStatus={stepCompletionStatus}
-            />
-          </AppShell.Navbar>
-
-          <AppShell.Main>
-            <Box style={{ minHeight: "100vh" }}>{renderMainContent()}</Box>
-          </AppShell.Main>
-        </AppShell>
-      </DatesProvider>
-    </MantineProvider>
+  return isUserAuthenticated ? (
+    <AppShell
+      header={{ height: 80 }}
+      navbar={{
+        width: {
+          base: 0, // Hidden on mobile (handled by Navigation component)
+          sm: currentPage === "workorders" && currentStep !== "list" ? 200 : 80, // Tablet
+          lg: 280, // Desktop
+        },
+        breakpoint: "sm",
+      }}
+      padding="0"
+    >
+      <AppShell.Header>
+        <UserHeader />
+      </AppShell.Header>
+      <AppShell.Navbar>
+        <Navigation
+          currentPage={currentPage}
+          currentStep={currentPage === "workorders" ? currentStep : undefined}
+          onPageChange={handlePageChange}
+          onStepChange={handleStepChange}
+          workOrderStatus={workOrderStatus}
+          stepCompletionStatus={stepCompletionStatus}
+        />
+      </AppShell.Navbar>
+      <AppShell.Main>
+        <Box style={{ minHeight: "100vh" }}>{renderMainContent()}</Box>
+      </AppShell.Main>
+    </AppShell>
+  ) : (
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="*" element={<Navigate to="/login" />} />
+    </Routes>
   );
 }

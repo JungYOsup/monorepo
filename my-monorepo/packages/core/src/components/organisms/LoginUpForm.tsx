@@ -1,8 +1,7 @@
+import { useAuthLoginAuthLoginPostMutation } from "@core/hooks/api/auth-login/useAuthLoginMutation";
 import {
   Box,
   Button,
-  Checkbox,
-  Group,
   Paper,
   PasswordInput,
   Stack,
@@ -10,21 +9,28 @@ import {
   TextInput,
   Title,
 } from "@mantine/core";
+import { useLocalStorage } from "@mantine/hooks";
 import { IconLock, IconMail } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface LoginData {
-  email: string;
+  id: string;
   password: string;
-  rememberMe: boolean;
 }
 
 export function LoginForm() {
+  const { mutate: LoginMutate } = useAuthLoginAuthLoginPostMutation();
+  const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useLocalStorage({
+    key: "isAuthenticated",
+    defaultValue: false,
+  });
+
   const [loginData, setLoginData] = useState<LoginData>({
-    email: "",
+    id: "",
     password: "",
-    rememberMe: false,
   });
 
   const [loading, setLoading] = useState(false);
@@ -35,20 +41,26 @@ export function LoginForm() {
       setLoginData((prev) => ({ ...prev, [field]: e.target.value }));
     };
 
-  const handleRememberMeChange = (checked: boolean) => {
-    setLoginData((prev) => ({ ...prev, rememberMe: checked }));
-  };
-
   const handleLogin = async () => {
+    LoginMutate({
+      authLoginPostRequest: {
+        identifier: loginData.id,
+        password: loginData.password,
+      },
+    });
+
     setLoading(true);
     // 로그인 로직 시뮬레이션
     setTimeout(() => {
       console.log("Login with:", loginData);
       setLoading(false);
     }, 1500);
+
+    navigate("/works");
+    setIsAuthenticated(true);
   };
 
-  const isFormValid = loginData.email && loginData.password;
+  const isFormValid = loginData.id && loginData.password;
 
   return (
     <Box w="100%" maw={400} mx="auto">
@@ -73,9 +85,9 @@ export function LoginForm() {
                 label="아이디"
                 placeholder="사번을 입력하세요"
                 leftSection={<IconMail size={16} />}
-                type="email"
-                value={loginData.email}
-                onChange={handleInputChange("email")}
+                type="id"
+                value={loginData.id}
+                onChange={handleInputChange("id")}
                 required
                 size="md"
               />
@@ -90,18 +102,6 @@ export function LoginForm() {
                   required
                   size="md"
                 />
-
-                {/* Remember Me & Forgot Password */}
-                <Group justify="space-between" mt="xs">
-                  <Checkbox
-                    label="Remember me"
-                    checked={loginData.rememberMe}
-                    onChange={(event) =>
-                      handleRememberMeChange(event.currentTarget.checked)
-                    }
-                    size="sm"
-                  />
-                </Group>
               </Stack>
 
               {/* Login Button */}

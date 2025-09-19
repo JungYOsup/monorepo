@@ -3,7 +3,11 @@ import { useQuery } from "@tanstack/react-query";
 
 export const useAuthWhoamiAuthWhoamiGetQuery = () => {
   return useQuery({
-    ...authWhoami.authWhoamiGet(),
+    ...authWhoami.authWhoamiGet({
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+      },
+    }),
     staleTime: 1000 * 60,
     retry: 1,
   });
