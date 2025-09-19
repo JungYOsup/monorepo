@@ -1,0 +1,14 @@
+{
+  "resource": "departments",
+  "instance": "MasterInstance",
+  "key": "DEPARTMENTS",
+  "queries": [
+    {
+      "name": "get",
+      "method": "departmentsGet",
+      "requestType": "MasterApiDepartmentsGetRequest"
+    }
+  ],
+  "mutations": []
+}
+

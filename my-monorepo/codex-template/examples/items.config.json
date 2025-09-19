@@ -1,0 +1,14 @@
+{
+  "resource": "items",
+  "instance": "MasterInstance",
+  "key": "ITEMS",
+  "queries": [
+    {
+      "name": "get",
+      "method": "itemsGet",
+      "requestType": "MasterApiItemsGetRequest"
+    }
+  ],
+  "mutations": []
+}
+

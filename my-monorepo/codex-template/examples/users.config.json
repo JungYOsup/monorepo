@@ -1,0 +1,29 @@
+{
+  "resource": "users",
+  "instance": "MasterInstance",
+  "key": "USERS",
+  "queries": [
+    {
+      "name": "get",
+      "method": "usersGet",
+      "requestType": "MasterApiUsersGetRequest"
+    },
+    {
+      "name": "getSelect",
+      "method": "usersFindPost",
+      "requestType": "MasterApiUsersFindPostRequest",
+      "select": {
+        "responseType": "AuthSignupPost201Response[]"
+      }
+    }
+  ],
+  "mutations": [
+    {
+      "name": "update",
+      "method": "usersUserIdPut",
+      "requestType": "MasterApiUsersUserIdPutRequest",
+      "keyFields": ["userId", "usersUserIdDeleteRequest"]
+    }
+  ]
+}
+

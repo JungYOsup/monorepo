@@ -1,0 +1,14 @@
+{
+  "resource": "partners",
+  "instance": "MasterInstance",
+  "key": "PARTNERS",
+  "queries": [
+    {
+      "name": "get",
+      "method": "partnersGet",
+      "requestType": "MasterApiPartnersGetRequest"
+    }
+  ],
+  "mutations": []
+}
+

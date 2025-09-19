@@ -7,7 +7,8 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
-    "create:app": "node scripts/create-app.js"
+    "create:app": "node scripts/create-app.js",
+    "generate:document:auto": "node codex-template/auto-generate.mjs"
   },
   "devDependencies": {
     "@types/react": "^19.1.13",
@@ -28,11 +29,15 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
+    "@lukemorales/query-key-factory": "^1.3.4",
     "@mantine/core": "^8.3.1",
     "@mantine/dates": "^8.3.1",
     "@mantine/hooks": "^8.3.1",
     "@mantine/notifications": "^8.3.1",
+    "@sizlcorp/sizl-api-document": "^2.1.281",
     "@tabler/icons-react": "^3.35.0",
+    "@tanstack/react-query": "^5.89.0",
+    "axios": "^1.12.2",
     "dayjs": "^1.11.18",
     "framer-motion": "^12.23.12"
   }
