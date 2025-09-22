@@ -8,6 +8,9 @@ type AutocompleteItem<T> = { value: string; label: string; __item?: T };
 
 export type EquipmentsGetAutocompleteProps<T = any> = {
   onSelect?: (item: T) => void;
+  value?: string; // controlled code
+  onChange?: (code: string) => void;
+  defaultValue?: string;
   label?: string;
   description?: string;
   placeholder?: string;
@@ -20,6 +23,9 @@ export type EquipmentsGetAutocompleteProps<T = any> = {
 
 export function EquipmentsGetAutocomplete<T = any>({
   onSelect,
+  value: codeValue,
+  onChange,
+  defaultValue,
   label = "Equipments 검색",
   description,
   placeholder = "코드/이름으로 검색",
@@ -31,7 +37,7 @@ export function EquipmentsGetAutocomplete<T = any>({
 }: EquipmentsGetAutocompleteProps<T>) {
   const LOAD_MORE_VALUE = "__LOAD_MORE__" as const;
   const LOAD_MORE_LABEL = "더 보기…" as const;
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState<string>(defaultValue ?? "");
   const [debounced] = useDebouncedValue(value, 300);
   const [page, setPage] = useState(1);
   const [items, setItems] = useState<T[]>([]);
@@ -61,13 +67,34 @@ export function EquipmentsGetAutocomplete<T = any>({
     loadingMoreRef.current = false;
   }, [res, pageSize, page]);
 
+  useEffect(() => {
+    if (typeof codeValue === "string") {
+      setValue((prev) => (prev !== codeValue ? codeValue : prev));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [codeValue]);
+
+  useEffect(() => {
+    if (!codeValue) return;
+    const found = (items as any[]).find(
+      (r: any) => String(r?.code ?? r?.id ?? "") === String(codeValue)
+    );
+    if (found) {
+      const label =
+        found?.code && found?.name
+          ? String(found.code) + " - " + String(found.name)
+          : String(found?.code ?? found?.name ?? String(found?.id ?? ""));
+      setValue(label);
+    }
+  }, [items, codeValue]);
+
   const data: AutocompleteItem<T>[] = useMemo(() => {
     const mapped: AutocompleteItem<T>[] = items.map((r: any) => {
       const label =
         r?.code && r?.name
           ? String(r.code) + " - " + String(r.name)
           : (r?.code ?? r?.name ?? String(r?.id ?? ""));
-      const value = String(label) + "#" + String(r?.id ?? label);
+      const value = String(r?.code ?? r?.id ?? label);
       return { value, label, __item: r as T } as AutocompleteItem<T>;
     });
     if (enabled && hasMore)
@@ -106,10 +133,9 @@ export function EquipmentsGetAutocomplete<T = any>({
           setTimeout(() => setValue((prev) => prev), 0);
           return;
         }
-        const found = (data as AutocompleteItem<T>[]).find(
-          (d) => d.value === val
-        );
+        const found = (data as AutocompleteItem<T>[]).find((d) => d.value === val);
         if (found?.__item && onSelect) onSelect(found.__item);
+        onChange?.(val);
         setValue(found?.label ?? val);
       }}
       rightSection={
@@ -123,6 +149,7 @@ export function EquipmentsGetAutocomplete<T = any>({
               setValue("");
               setItems([]);
               setPage(1);
+              onChange?.("");
               onClear?.();
             }}
           >
@@ -131,7 +158,17 @@ export function EquipmentsGetAutocomplete<T = any>({
         ) : undefined
       }
       rightSectionPointerEvents="all"
-      {...autocompleteProps}
+      {
+        ...(() => {
+          const { value: _v, onChange: _oc, ...rest } = (autocompleteProps ?? {}) as any;
+          return rest;
+        })()
+      }
     />
   );
 }
+
+// Sync external code to label display
+// 1) when external value changes, set input to code to trigger search
+// 2) when items update, map code -> label for display
+// Note: placed at end to keep component concise

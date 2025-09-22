@@ -2,6 +2,7 @@ import { Icon } from "@core/components/atoms/Icon";
 import { EquipmentsGetAutocomplete } from "@core/components/organisms/autocomplete/EquipmentsGetAutocomplete";
 import { LocationsGetAutocomplete } from "@core/components/organisms/autocomplete/LocationsGetAutocomplete";
 import { PrintersGetAutocomplete } from "@core/components/organisms/autocomplete/PrintersGetAutocomplete";
+import { useAuthWhoamiAuthWhoamiGetQuery } from "@core/hooks/api/auth-whoami/useAuthWhoamiQuery";
 import {
   Box,
   Button,
@@ -32,48 +33,30 @@ interface SettingsFormData {
   printer: string;
 }
 
-// Mock 설정 데이터
-const mockSettings: SettingsFormData = {
-  userId: "EMP-2024-001",
-  password: "••••••••",
-  equipment: "LINE-A-001",
-  outboundLocation: "OUT-ZONE-A",
-  inboundLocation: "IN-ZONE-A",
-  printer: "PRINTER-001",
-};
-
-// Mock 옵션 데이터
-const equipmentOptions = [
-  { value: "LINE-A-001", label: "생산라인 A-001" },
-  { value: "LINE-A-002", label: "생산라인 A-002" },
-  { value: "LINE-B-001", label: "생산라인 B-001" },
-  { value: "LINE-B-002", label: "생산라인 B-002" },
-  { value: "LINE-C-001", label: "생산라인 C-001" },
-];
-
-const locationOptions = [
-  { value: "OUT-ZONE-A", label: "출고구역 A" },
-  { value: "OUT-ZONE-B", label: "출고구역 B" },
-  { value: "OUT-ZONE-C", label: "출고구역 C" },
-  { value: "IN-ZONE-A", label: "입고구역 A" },
-  { value: "IN-ZONE-B", label: "입고구역 B" },
-  { value: "IN-ZONE-C", label: "입고구역 C" },
-];
-
-const printerOptions = [
-  { value: "PRINTER-001", label: "라벨프린터 001" },
-  { value: "PRINTER-002", label: "라벨프린터 002" },
-  { value: "PRINTER-003", label: "라벨프린터 003" },
-  { value: "PRINTER-004", label: "바코드프린터 001" },
-  { value: "PRINTER-005", label: "바코드프린터 002" },
-];
-
 export function SettingsModal({ opened, onClose }: SettingsModalProps) {
+  const { data } = useAuthWhoamiAuthWhoamiGetQuery();
+  const userData = data?.data;
+  const {
+    username,
+    equipmentCode,
+    toLocationCode,
+    fromLocationCode,
+    printerCode,
+  } = userData || {};
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
+  console.log(userData);
+
   const form = useForm<SettingsFormData>({
-    initialValues: mockSettings,
+    initialValues: {
+      userId: username || "",
+      password: "*********",
+      equipment: equipmentCode || "",
+      outboundLocation: fromLocationCode || "",
+      inboundLocation: toLocationCode || "",
+      printer: printerCode || "",
+    },
     validate: {
       equipment: (value) => (!value ? "설비를 선택해주세요" : null),
       outboundLocation: (value) =>
@@ -107,7 +90,7 @@ export function SettingsModal({ opened, onClose }: SettingsModalProps) {
   };
 
   const handleReset = () => {
-    form.setValues(mockSettings);
+    form.setValues({});
   };
 
   return (
@@ -199,12 +182,14 @@ export function SettingsModal({ opened, onClose }: SettingsModalProps) {
                     <LocationsGetAutocomplete
                       label="입고 로케이션"
                       placeholder="입고 로케이션 선택"
+                      value={form.values.inboundLocation}
                       {...form.getInputProps("inboundLocation")}
                       description="자재 입고 시 사용할 로케이션"
                     />
                   </Grid.Col>
                 </Grid>
                 <PrintersGetAutocomplete
+                  value={form.values.printer}
                   label="연결 프린터"
                   placeholder="연결 프린터 선택"
                   {...form.getInputProps("printer")}

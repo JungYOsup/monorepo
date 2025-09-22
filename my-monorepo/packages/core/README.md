@@ -62,3 +62,11 @@ GET API Autocomplete
 - `--emit-components`로 생성되는 템플릿은 각 리소스의 쿼리 훅(`use<Resource><Resource>GetQuery`)을 사용하도록 구성됩니다.
   - 훅 및 요청/응답 타입은 템플릿 단계에서 포괄적(`any`)으로 두며, 실제 리소스에 맞춰 보완하세요.
   - 기본 레이블은 `code - name` → `code` → `name` → `id` 순으로 구성합니다.
+
+코드 값으로 제어하기 (초기값/양방향 바인딩)
+
+- `EquipmentsGetAutocomplete`, `LocationsGetAutocomplete`, `PrintersGetAutocomplete`는 코드 값만으로 제어할 수 있습니다.
+  - `value`에 코드 문자열을 넣으면 내부적으로 해당 옵션을 조회해 입력창에는 `code - name` 형식으로 표시합니다.
+  - `onChange`는 선택 시 코드만 전달합니다. 지울 때는 빈 문자열(`""`).
+  - `defaultValue`로 초기 코드 값을 줄 수도 있습니다.
+  - 외부 `autocompleteProps`로 전달되는 `value`/`onChange`는 내부 관리와 충돌을 막기 위해 무시됩니다.
