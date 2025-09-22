@@ -22,8 +22,8 @@ export type FindApiAutocompleteProps = {
 export function FindApiAutocomplete({
   items,
   onSelect,
-  placeholder = "Search find endpoints...",
-  label = "Find API",
+  placeholder = "Search GET endpoints...",
+  label = "GET API",
   description,
   limit = 20,
   autocompleteProps,

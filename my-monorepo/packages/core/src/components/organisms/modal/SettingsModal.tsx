@@ -1,5 +1,5 @@
 import { Icon } from "@core/components/atoms/Icon";
-import { LocationsFindAutocomplete } from "@core/components/organisms/autocomplete/LocationsFindAutocomplete";
+import { LocationsGetAutocomplete } from "@core/components/organisms/autocomplete/LocationsGetAutocomplete";
 import {
   Box,
   Button,
@@ -193,7 +193,7 @@ export function SettingsModal({ opened, onClose }: SettingsModalProps) {
 
                 <Grid>
                   <Grid.Col span={6}>
-                    <LocationsFindAutocomplete
+                    <LocationsGetAutocomplete
                       label="출고 로케이션"
                       placeholder="출고 로케이션 선택"
                       {...form.getInputProps("outboundLocation")}
