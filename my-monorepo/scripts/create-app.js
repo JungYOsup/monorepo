@@ -1,3 +1,18 @@
+/**
+ * create-app
+ *
+ * 목적
+ * - `apps/dev`을 복제하여 새 앱 워크스페이스를 생성합니다.
+ * - 복제 후 `package.json`의 `name`과 `index.html`의 `<title>`을 앱 이름으로 치환합니다.
+ *
+ * 실행 방법
+ * - npm run create:app <app-name>
+ *   예) npm run create:app company-a
+ *
+ * 전제 조건
+ * - 소스 템플릿으로 `apps/dev`가 존재해야 합니다.
+ * - Node 18+ 권장.
+ */
 const fs = require("fs");
 const path = require("path");
 

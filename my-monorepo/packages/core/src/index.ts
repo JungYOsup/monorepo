@@ -13,3 +13,6 @@ export * from "./components/organisms/UserHeader";
 
 //
 export * from "./components/organisms/modal/ModalManager";
+
+// utils
+export * from "./util/findTemplates";

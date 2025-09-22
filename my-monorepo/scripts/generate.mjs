@@ -1,9 +1,27 @@
 #!/usr/bin/env node
 /*
-  단일 설정(JSON) 기반 API + Hooks 생성기
-  - 입력: 쿼리/뮤테이션을 기술한 JSON 설정
-  - 출력: Query 모듈과 React Query 훅 모듈
-  - 목적: packages/core 스타일(query-key-factory + axios 인스턴스)을 그대로 적용
+  generate (config-driven)
+
+  목적
+  - 단일 JSON 설정을 바탕으로 특정 리소스의 Query 모듈과 React Query 훅을 생성합니다.
+  - `@lukemorales/query-key-factory` 스타일과 axios 인스턴스 패턴을 그대로 적용합니다.
+
+  입력
+  - --config <path-to-config.json>
+  - 구성: { resource, instance, key?, queries?, mutations? }
+
+  출력
+  - `packages/core/src/api/<resource>/<resource>Query.ts`
+  - `packages/core/src/hooks/<resource>/use<Resource>Query.ts`
+  - `packages/core/src/hooks/<resource>/use<Resource>Mutation.ts`
+
+  실행 방법
+  - node scripts/generate.mjs --config codex-template/examples/generate.config.json
+  - 또는 구성에 맞게 파일 경로를 지정하세요.
+
+  비고
+  - 필요한 모델 타입은 `@sizlcorp/sizl-api-document/dist/models`에서 import합니다.
+  - Node 18+ 권장.
 */
 
 import fs from "fs";

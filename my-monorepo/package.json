@@ -8,7 +8,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
     "create:app": "node scripts/create-app.js",
-    "generate:document:auto": "node codex-template/auto-generate.mjs"
+    "generate:document:auto": "node codex-template/auto-generate-api.mjs",
+    "generate:autoComplete": "node scripts/generate-autoComplete.mjs"
   },
   "devDependencies": {
     "@types/react": "^19.1.13",

@@ -1,11 +1,27 @@
 #!/usr/bin/env node
 /*
-  자동 생성기(auto-generate)
-  - @sizlcorp/sizl-api-document를 선택적으로 최신으로 업데이트(--no-update로 생략 가능)
-  - @core/instance/axios.ts에 정의된 모든 인스턴스가 참조하는 API 클래스(DefaultApi, MasterApi, UserApi, ProductionActionApi, SpcApi 등)를 스캔
-  - 각 API의 d.ts에서 모든 메서드와 요청 타입 수집(…Get, …FindPost, …Post, …Put, …Delete, …Patch 등)
-  - 메서드를 리소스 루트 기준으로 그룹화(예: usersGet, usersUserIdPut → users)
-  - 올바른 axios Instance를 사용하여 리소스별 Query 모듈 + Hooks 생성
+  auto-generate-api
+
+  목적
+  - `@core/instance/axios.ts`에 선언된 인스턴스를 기준으로, 연결된 API 클래스들을 스캔합니다.
+  - 각 API의 d.ts에서 메서드/요청 타입을 수집하여 리소스별 Query 모듈과 React Query 훅을 생성합니다.
+  - 선택적으로 `@sizlcorp/sizl-api-document`를 최신으로 업데이트합니다.
+
+  출력
+  - `packages/core/src/api/<resource>/<Resource>Query.ts`
+  - `packages/core/src/hooks/api/<resource>/use<Resource>Query.ts`
+  - `packages/core/src/hooks/api/<resource>/use<Resource>Mutation.ts`
+
+  실행 방법
+  - 전체 자동 생성: npm run generate:document:auto
+  - 문서 업데이트 생략: node scripts/auto-generate-api.mjs --no-update
+  - 일부 리소스만: node scripts/auto-generate-api.mjs --filter <resource>
+  - 기존 파일 덮어쓰기: node scripts/auto-generate-api.mjs --overwrite
+  - 동작만 확인: node scripts/auto-generate-api.mjs --dry-run
+
+  비고
+  - 리소스가 이미 존재하면 기본적으로 건너뜁니다(`--overwrite`로 대체 생성).
+  - Node 18+ 권장.
 */
 
 import { spawnSync } from "child_process";

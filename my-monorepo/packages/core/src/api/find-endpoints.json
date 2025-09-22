@@ -1,0 +1,164 @@
+[
+  {
+    "path": "/abstractItems/find"
+  },
+  {
+    "path": "/defects/find"
+  },
+  {
+    "path": "/equipments/find"
+  },
+  {
+    "path": "/itemCategories/find"
+  },
+  {
+    "path": "/items/find"
+  },
+  {
+    "path": "/lots/find"
+  },
+  {
+    "path": "/moldCavities/find"
+  },
+  {
+    "path": "/moldStocks/find"
+  },
+  {
+    "path": "/molds/find"
+  },
+  {
+    "path": "/routingBoms/find"
+  },
+  {
+    "path": "/routings/find"
+  },
+  {
+    "path": "/routingOutsources/find"
+  },
+  {
+    "path": "/productionPlans/find"
+  },
+  {
+    "path": "/operations/find"
+  },
+  {
+    "path": "/sites/find"
+  },
+  {
+    "path": "/users/find"
+  },
+  {
+    "path": "/workLogs/find"
+  },
+  {
+    "path": "/worksItem/find"
+  },
+  {
+    "path": "/worksOrderGroup/find"
+  },
+  {
+    "path": "/worksOrderGroupSort/find"
+  },
+  {
+    "path": "/works/find"
+  },
+  {
+    "path": "/downtimeReasons/find"
+  },
+  {
+    "path": "/ledgers/find"
+  },
+  {
+    "path": "/ledgerWithActualDateView/find"
+  },
+  {
+    "path": "/locations/find"
+  },
+  {
+    "path": "/inventories/find"
+  },
+  {
+    "path": "/inventoriesBetween/find"
+  },
+  {
+    "path": "/wmsLogs/find"
+  },
+  {
+    "path": "/specifications/find"
+  },
+  {
+    "path": "/inspections/find"
+  },
+  {
+    "path": "/itemChanges/find"
+  },
+  {
+    "path": "/partners/find"
+  },
+  {
+    "path": "/purchaseOrders/find"
+  },
+  {
+    "path": "/purchaseOrderCategories/find"
+  },
+  {
+    "path": "/purchaseOrderItems/find"
+  },
+  {
+    "path": "/transportation/find"
+  },
+  {
+    "path": "/workers/find"
+  },
+  {
+    "path": "/invoices/find"
+  },
+  {
+    "path": "/stockPlans/find"
+  },
+  {
+    "path": "/workLogsWorks/find"
+  },
+  {
+    "path": "/splitLot/find"
+  },
+  {
+    "path": "/departments/find"
+  },
+  {
+    "path": "/loginLogs/find"
+  },
+  {
+    "path": "/femsSettings/find"
+  },
+  {
+    "path": "/grades/find"
+  },
+  {
+    "path": "/ItemGradeView/find"
+  },
+  {
+    "path": "/workerLogs/find"
+  },
+  {
+    "path": "/wlWithEslView/find"
+  },
+  {
+    "path": "/printers/find"
+  },
+  {
+    "path": "/incomingInspections/find"
+  },
+  {
+    "path": "/vehicles/find"
+  },
+  {
+    "path": "/authorizations/find"
+  },
+  {
+    "path": "/menuLists/find"
+  },
+  {
+    "path": "/userDetailView/find"
+  }
+]
