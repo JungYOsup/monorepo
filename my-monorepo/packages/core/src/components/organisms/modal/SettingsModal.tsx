@@ -1,6 +1,7 @@
 import { Icon } from "@core/components/atoms/Icon";
 import { EquipmentsGetAutocomplete } from "@core/components/organisms/autocomplete/EquipmentsGetAutocomplete";
 import { LocationsGetAutocomplete } from "@core/components/organisms/autocomplete/LocationsGetAutocomplete";
+import { PrintersGetAutocomplete } from "@core/components/organisms/autocomplete/PrintersGetAutocomplete";
 import {
   Box,
   Button,
@@ -10,7 +11,6 @@ import {
   Modal,
   Notification,
   PasswordInput,
-  Select,
   Stack,
   Text,
   TextInput,
@@ -204,17 +204,11 @@ export function SettingsModal({ opened, onClose }: SettingsModalProps) {
                     />
                   </Grid.Col>
                 </Grid>
-
-                <Select
+                <PrintersGetAutocomplete
                   label="연결 프린터"
-                  placeholder="프린터를 선택하세요"
-                  data={printerOptions}
+                  placeholder="연결 프린터 선택"
                   {...form.getInputProps("printer")}
-                  leftSection={<Icon name="printer" size={16} />}
-                  searchable
-                  clearable
-                  description="라벨 및 바코드 출력에 사용할 프린터"
-                  className="touch-friendly"
+                  description="현재 연결된 프린터를 선택하세요"
                 />
               </Stack>
             </Box>
