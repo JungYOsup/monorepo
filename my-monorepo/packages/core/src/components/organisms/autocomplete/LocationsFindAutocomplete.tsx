@@ -1,11 +1,10 @@
-import { useItemsItemsFindPostQuery } from "@core/hooks/api/items/useItemsQuery";
+import { useLocationsLocationsFindPostQuery } from "@core/hooks/api/locations/useLocationsQuery";
 import { Autocomplete, AutocompleteProps } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
-import type { ItemsGet200ResponseRowsInner } from "@sizlcorp/sizl-api-document/models/src/model/items-get200-response-rows-inner";
 import { useMemo, useState } from "react";
 
-export type ItemsFindAutocompleteProps = {
-  onSelect?: (item: ItemsGet200ResponseRowsInner) => void;
+export type LocationsFindAutocompleteProps<T = any> = {
+  onSelect?: (item: T) => void;
   label?: string;
   placeholder?: string;
   limit?: number;
@@ -13,31 +12,32 @@ export type ItemsFindAutocompleteProps = {
   autocompleteProps?: Partial<AutocompleteProps>;
 };
 
-export function ItemsFindAutocomplete({
+export function LocationsFindAutocomplete<T = any>({
   onSelect,
-  label = "품목 검색",
+  label = "Locations 검색",
   placeholder = "코드/이름으로 검색",
   limit = 20,
   minLength = 1,
   autocompleteProps,
-}: ItemsFindAutocompleteProps) {
+}: LocationsFindAutocompleteProps<T>) {
   const [value, setValue] = useState("");
   const [debounced] = useDebouncedValue(value, 300);
 
   const enabled = debounced.trim().length >= minLength;
 
-  const { data: rows } = useItemsItemsFindPostQuery({});
-  const items = rows?.data ?? [];
+  // NOTE: generator cannot infer the exact request type here; use any for template
+  const { data: rows } = useLocationsLocationsFindPostQuery({} as any);
+  const items: T[] = (rows?.data ?? []) as T[];
 
   const { data, map } = useMemo(() => {
-    const m = new Map<string, ItemsGet200ResponseRowsInner>();
-    const d = items.slice(0, limit).map((r) => {
+    const m = new Map<string, T>();
+    const d = items.slice(0, limit).map((r: any) => {
       const label =
-        r.code && r.name
-          ? `${r.code} - ${r.name}`
-          : (r.code ?? r.name ?? String(r.id));
-      const key = `${label}#${r.id}`; // reduce collision risk
-      m.set(key, r);
+        r?.code && r?.name
+          ? String(r.code) + " - " + String(r.name)
+          : (r?.code ?? r?.name ?? String(r?.id ?? ""));
+      const key = String(label) + "#" + String(r?.id ?? label); // reduce collision risk
+      m.set(key, r as T);
       return key;
     });
     return { data: d, map: m };
