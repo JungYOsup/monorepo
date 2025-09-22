@@ -1,24 +1,29 @@
 import { useLocationsLocationsFindPostQuery } from "@core/hooks/api/locations/useLocationsQuery";
-import { Autocomplete, AutocompleteProps } from "@mantine/core";
+import { ActionIcon, Autocomplete, AutocompleteProps } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { useMemo, useState } from "react";
+import { Icon } from "../../atoms/Icon";
 
 export type LocationsFindAutocompleteProps<T = any> = {
   onSelect?: (item: T) => void;
   label?: string;
+  description?: string;
   placeholder?: string;
   limit?: number;
   minLength?: number;
   autocompleteProps?: Partial<AutocompleteProps>;
+  onClear?: () => void;
 };
 
 export function LocationsFindAutocomplete<T = any>({
   onSelect,
   label = "Locations 검색",
+  description,
   placeholder = "코드/이름으로 검색",
   limit = 20,
   minLength = 1,
   autocompleteProps,
+  onClear,
 }: LocationsFindAutocompleteProps<T>) {
   const [value, setValue] = useState("");
   const [debounced] = useDebouncedValue(value, 300);
@@ -46,6 +51,7 @@ export function LocationsFindAutocomplete<T = any>({
   return (
     <Autocomplete
       label={label}
+      description={description}
       placeholder={placeholder}
       value={value}
       onChange={setValue}
@@ -53,8 +59,26 @@ export function LocationsFindAutocomplete<T = any>({
       limit={limit}
       onOptionSubmit={(val) => {
         const item = map.get(val);
+        setValue(val);
         if (item && onSelect) onSelect(item);
       }}
+      rightSection={
+        value ? (
+          <ActionIcon
+            size="sm"
+            variant="subtle"
+            color="gray"
+            aria-label="Clear selection"
+            onClick={() => {
+              setValue("");
+              onClear?.();
+            }}
+          >
+            <Icon name="close" size={14} />
+          </ActionIcon>
+        ) : undefined
+      }
+      rightSectionPointerEvents="all"
       {...autocompleteProps}
     />
   );

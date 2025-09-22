@@ -109,26 +109,31 @@ function genAutocompleteComponent({ resource }) {
 
   // Lightweight, generic template mirroring the existing ItemsFindAutocomplete
   return `import { ${hookName} } from "${hookFile}";
-import { Autocomplete, AutocompleteProps } from "@mantine/core";
+import { ActionIcon, Autocomplete, AutocompleteProps } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { useMemo, useState } from "react";
+import { Icon } from "../../atoms/Icon";
 
 export type ${Pascal}FindAutocompleteProps<T = any> = {
   onSelect?: (item: T) => void;
   label?: string;
+  description?: string;
   placeholder?: string;
   limit?: number;
   minLength?: number;
   autocompleteProps?: Partial<AutocompleteProps>;
+  onClear?: () => void;
 };
 
 export function ${Pascal}FindAutocomplete<T = any>({
   onSelect,
   label = "${Pascal} 검색",
+  description,
   placeholder = "코드/이름으로 검색",
   limit = 20,
   minLength = 1,
   autocompleteProps,
+  onClear,
 }: ${Pascal}FindAutocompleteProps<T>) {
   const [value, setValue] = useState("");
   const [debounced] = useDebouncedValue(value, 300);
@@ -153,6 +158,7 @@ export function ${Pascal}FindAutocomplete<T = any>({
   return (
     <Autocomplete
       label={label}
+      description={description}
       placeholder={placeholder}
       value={value}
       onChange={setValue}
@@ -160,8 +166,26 @@ export function ${Pascal}FindAutocomplete<T = any>({
       limit={limit}
       onOptionSubmit={(val) => {
         const item = map.get(val);
+        setValue(val);
         if (item && onSelect) onSelect(item);
       }}
+      rightSection={
+        value ? (
+          <ActionIcon
+            size="sm"
+            variant="subtle"
+            color="gray"
+            aria-label="Clear selection"
+            onClick={() => {
+              setValue("");
+              onClear?.();
+            }}
+          >
+            <Icon name=\"close\" size={14} />
+          </ActionIcon>
+        ) : undefined
+      }
+      rightSectionPointerEvents="all"
       {...autocompleteProps}
     />
   );

@@ -197,6 +197,7 @@ export function SettingsModal({ opened, onClose }: SettingsModalProps) {
                       label="출고 로케이션"
                       placeholder="출고 로케이션 선택"
                       {...form.getInputProps("outboundLocation")}
+                      description="자재 출고 시 사용할 로케이션"
                     />
                   </Grid.Col>
                   <Grid.Col span={6}>

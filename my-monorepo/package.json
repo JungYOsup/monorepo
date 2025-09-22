@@ -9,7 +9,7 @@
     "check-types": "turbo run check-types",
     "create:app": "node scripts/create-app.js",
     "generate:document:auto": "node codex-template/auto-generate-api.mjs",
-    "generate:autoComplete": "node scripts/generate-autoComplete.mjs"
+    "generate:autocomplete": "node scripts/generate-autocomplete.mjs"
   },
   "devDependencies": {
     "@types/react": "^19.1.13",
