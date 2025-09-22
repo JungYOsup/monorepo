@@ -1,3 +1,5 @@
+import { ModalProvider } from "@core/context/modal/ModalContext";
+import { ModalManager } from "@core/index";
 import { MantineProvider } from "@mantine/core";
 import { DatesProvider } from "@mantine/dates";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -18,7 +20,10 @@ root.render(
       <QueryClientProvider client={queryClient}>
         <MantineProvider defaultColorScheme="light">
           <DatesProvider settings={{ locale: "ko" }}>
-            <App />
+            <ModalProvider>
+              <App />
+              <ModalManager />
+            </ModalProvider>
           </DatesProvider>
         </MantineProvider>
       </QueryClientProvider>

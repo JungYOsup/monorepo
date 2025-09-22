@@ -1,4 +1,4 @@
-import { ConfirmationModal } from "@core/components/molecules/modal/ConfirmationModal";
+import { ConfirmationModal } from "@core/components/molecules/ConfirmationModal";
 
 export interface LogoutConfirmationModalProps {
   opened: boolean;

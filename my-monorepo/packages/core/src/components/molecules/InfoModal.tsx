@@ -1,41 +1,32 @@
-import { Icon } from "@core/components/atoms/Icon";
-import { BaseModal } from "@core/components/molecules/BaseModal";
 import { Box, Button, Group, Stack, Text } from "@mantine/core";
+import { Icon } from "../atoms/Icon";
+import { BaseModal } from "./BaseModal";
 
-export interface ConfirmationModalProps {
+export interface InfoModalProps {
   opened: boolean;
   onClose: () => void;
-  onConfirm: () => void;
+  onConfirm?: () => void; // ModalManager 호환성을 위해 추가
   title: string;
   message: string;
-  confirmText?: string;
-  cancelText?: string;
-  confirmColor?: string;
+  confirmText?: string; // buttonText 대신 confirmText 사용
   icon?: string;
   iconColor?: string;
   description?: string;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
 }
 
-export function ConfirmationModal({
+export function InfoModal({
   opened,
   onClose,
   onConfirm,
   title,
   message,
   confirmText = "확인",
-  cancelText = "취소",
-  confirmColor = "red",
-  icon = "alertTriangle",
-  iconColor = "var(--factory-warning)",
+  icon = "checkCircle",
+  iconColor = "var(--factory-success)",
   description,
   size = "sm",
-}: ConfirmationModalProps) {
-  const handleConfirm = () => {
-    onConfirm();
-    onClose();
-  };
-
+}: InfoModalProps) {
   return (
     <BaseModal opened={opened} onClose={onClose} title={title} size={size}>
       <Stack gap="md">
@@ -57,13 +48,8 @@ export function ConfirmationModal({
           </Box>
         </Group>
 
-        <Group justify="flex-end" gap="sm" mt="lg">
-          <Button variant="subtle" onClick={onClose}>
-            {cancelText}
-          </Button>
-          <Button color={confirmColor} onClick={handleConfirm}>
-            {confirmText}
-          </Button>
+        <Group justify="center" mt="lg">
+          <Button onClick={onConfirm || onClose}>{confirmText}</Button>
         </Group>
       </Stack>
     </BaseModal>

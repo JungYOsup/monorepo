@@ -1,4 +1,5 @@
-import { LogoutConfirmationModal } from "@core/components/organisms/LogoutConfirmationModal";
+import { useLogoutModal } from "@core/hooks/modal/useLogoutModal";
+import { useSettingsModal } from "@core/hooks/modal/useSettingsModal";
 import {
   Avatar,
   Box,
@@ -9,7 +10,7 @@ import {
   Stack,
   Text,
 } from "@mantine/core";
-import { useDisclosure, useLocalStorage } from "@mantine/hooks";
+import { useLocalStorage } from "@mantine/hooks";
 import { Icon } from "../atoms/Icon";
 
 // Mock user data
@@ -23,20 +24,22 @@ const mockUser = {
 };
 
 export function UserHeader() {
-  const [isAuthenticated, setIsAuthenticated, removeValue] = useLocalStorage({
+  const [_, setIsAuthenticated, removeValue] = useLocalStorage({
     key: "isAuthenticated",
   });
 
-  const [
-    logoutModalOpened,
-    { open: openLogoutModal, close: closeLogoutModal },
-  ] = useDisclosure(false);
+  const { openLogoutModal } = useLogoutModal();
+  const { openSettingsModal } = useSettingsModal();
 
   const handleLogout = () => {
-    // Clear any stored session data
-    removeValue();
-    closeLogoutModal();
-    setIsAuthenticated("false");
+    openLogoutModal(() => {
+      // 실제 로그아웃 로직
+      removeValue();
+    });
+  };
+
+  const handleSettings = () => {
+    openSettingsModal();
   };
 
   return (
@@ -125,22 +128,20 @@ export function UserHeader() {
                 <Menu.Divider />
 
                 <Menu.Label>계정 관리</Menu.Label>
-                <Menu.Item leftSection={<Icon name="user" size={16} />}>
-                  프로필 설정
-                </Menu.Item>
-                <Menu.Item leftSection={<Icon name="settings" size={16} />}>
+
+                <Menu.Item
+                  onClick={handleSettings}
+                  leftSection={<Icon name="settings" size={16} />}
+                >
                   환경 설정
-                </Menu.Item>
-                <Menu.Item leftSection={<Icon name="bell" size={16} />}>
-                  알림 설정
                 </Menu.Item>
 
                 <Menu.Divider />
 
                 <Menu.Item
-                  leftSection={<Icon name="logOut" size={16} />}
+                  leftSection={<Icon name="logout" size={16} />}
                   color="red"
-                  onClick={openLogoutModal}
+                  onClick={handleLogout}
                 >
                   로그아웃
                 </Menu.Item>
@@ -149,13 +150,6 @@ export function UserHeader() {
           </Group>
         </Container>
       </Box>
-
-      {/* Logout Confirmation Modal */}
-      <LogoutConfirmationModal
-        opened={logoutModalOpened}
-        onClose={closeLogoutModal}
-        onConfirm={handleLogout}
-      />
     </>
   );
 }

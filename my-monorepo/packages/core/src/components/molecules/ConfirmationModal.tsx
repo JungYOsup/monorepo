@@ -2,29 +2,49 @@ import { Icon } from "@core/components/atoms/Icon";
 import { BaseModal } from "@core/components/molecules/BaseModal";
 import { Box, Button, Group, Stack, Text } from "@mantine/core";
 
-export interface InfoModalProps {
+export interface ConfirmationModalProps {
   opened: boolean;
   onClose: () => void;
+  onConfirm: () => void;
+  onCancel?: () => void; // onCancel prop 추가
   title: string;
   message: string;
-  buttonText?: string;
+  confirmText?: string;
+  cancelText?: string;
+  confirmColor?: string;
   icon?: string;
   iconColor?: string;
   description?: string;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
 }
 
-export function InfoModal({
+export function ConfirmationModal({
   opened,
   onClose,
+  onConfirm,
+  onCancel,
   title,
   message,
-  buttonText = "확인",
-  icon = "checkCircle",
-  iconColor = "var(--factory-success)",
+  confirmText = "확인",
+  cancelText = "취소",
+  confirmColor = "red",
+  icon = "alertTriangle",
+  iconColor = "var(--factory-warning)",
   description,
   size = "sm",
-}: InfoModalProps) {
+}: ConfirmationModalProps) {
+  const handleConfirm = () => {
+    onConfirm();
+    onClose();
+  };
+
+  const handleCancel = () => {
+    if (onCancel) {
+      onCancel();
+    }
+    onClose();
+  };
+
   return (
     <BaseModal opened={opened} onClose={onClose} title={title} size={size}>
       <Stack gap="md">
@@ -46,8 +66,13 @@ export function InfoModal({
           </Box>
         </Group>
 
-        <Group justify="center" mt="lg">
-          <Button onClick={onClose}>{buttonText}</Button>
+        <Group justify="flex-end" gap="sm" mt="lg">
+          <Button variant="subtle" onClick={handleCancel}>
+            {cancelText}
+          </Button>
+          <Button color={confirmColor} onClick={handleConfirm}>
+            {confirmText}
+          </Button>
         </Group>
       </Stack>
     </BaseModal>

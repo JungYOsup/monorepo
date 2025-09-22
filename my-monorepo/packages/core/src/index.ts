@@ -10,3 +10,6 @@ export * from "./util/ImageWithFallback";
 // frame
 export * from "./components/organisms/Navigation";
 export * from "./components/organisms/UserHeader";
+
+//
+export * from "./components/organisms/modal/ModalManager";
