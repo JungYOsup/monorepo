@@ -1,1 +1,284 @@
-[]
+[
+  {
+    "path": "/auth/whoami"
+  },
+  {
+    "path": "/abstractItems"
+  },
+  {
+    "path": "/defects"
+  },
+  {
+    "path": "/equipments"
+  },
+  {
+    "path": "/itemCategories"
+  },
+  {
+    "path": "/items"
+  },
+  {
+    "path": "/lots"
+  },
+  {
+    "path": "/moldCavities"
+  },
+  {
+    "path": "/moldStocks"
+  },
+  {
+    "path": "/molds"
+  },
+  {
+    "path": "/routingBoms"
+  },
+  {
+    "path": "/routings"
+  },
+  {
+    "path": "/routingOutsources"
+  },
+  {
+    "path": "/productionPlans"
+  },
+  {
+    "path": "/operations"
+  },
+  {
+    "path": "/sites"
+  },
+  {
+    "path": "/users"
+  },
+  {
+    "path": "/workLogs"
+  },
+  {
+    "path": "/worksItem"
+  },
+  {
+    "path": "/worksOrderGroup"
+  },
+  {
+    "path": "/worksOrderGroupSort"
+  },
+  {
+    "path": "/slittingWorksOrderGroup"
+  },
+  {
+    "path": "/works"
+  },
+  {
+    "path": "/downtimeReasons"
+  },
+  {
+    "path": "/ledgers"
+  },
+  {
+    "path": "/ledgerWithActualDateView"
+  },
+  {
+    "path": "/locations"
+  },
+  {
+    "path": "/wipInventories"
+  },
+  {
+    "path": "/inventories"
+  },
+  {
+    "path": "/inventoriesBetween"
+  },
+  {
+    "path": "/wmsLogs"
+  },
+  {
+    "path": "/specifications"
+  },
+  {
+    "path": "/inspections"
+  },
+  {
+    "path": "/inspections/active"
+  },
+  {
+    "path": "/mes/overview"
+  },
+  {
+    "path": "/kpi/leadTime"
+  },
+  {
+    "path": "/kpi/manHourCost"
+  },
+  {
+    "path": "/kpi/defectRate"
+  },
+  {
+    "path": "/kpi/uph"
+  },
+  {
+    "path": "/kpi/orderLeadTime"
+  },
+  {
+    "path": "/kpi/capacityUtilization"
+  },
+  {
+    "path": "/kpi/electricPower"
+  },
+  {
+    "path": "/itemChanges"
+  },
+  {
+    "path": "/itemStandardAttachments"
+  },
+  {
+    "path": "/quality/defectStatistics"
+  },
+  {
+    "path": "/partners"
+  },
+  {
+    "path": "/purchaseOrders"
+  },
+  {
+    "path": "/purchaseOrderCategories"
+  },
+  {
+    "path": "/purchaseOrderItems"
+  },
+  {
+    "path": "/purchaseOrderItems/active"
+  },
+  {
+    "path": "/purchaseOrderItemsWithItemGrade"
+  },
+  {
+    "path": "/transportation"
+  },
+  {
+    "path": "/workers"
+  },
+  {
+    "path": "/workers/getWorkers"
+  },
+  {
+    "path": "/invoices"
+  },
+  {
+    "path": "/stockPlans"
+  },
+  {
+    "path": "/workLogsWorks"
+  },
+  {
+    "path": "/splitLot"
+  },
+  {
+    "path": "/departments"
+  },
+  {
+    "path": "/loginLogs"
+  },
+  {
+    "path": "/fems/hourly"
+  },
+  {
+    "path": "/fems/daily"
+  },
+  {
+    "path": "/fems/monthly"
+  },
+  {
+    "path": "/fems/hourly/loadType"
+  },
+  {
+    "path": "/fems/daily/loadType"
+  },
+  {
+    "path": "/fems/monthly/loadType"
+  },
+  {
+    "path": "/fems/period"
+  },
+  {
+    "path": "/fems/period/loadType"
+  },
+  {
+    "path": "/fems/quarterHourly"
+  },
+  {
+    "path": "/fems/currentLoadType"
+  },
+  {
+    "path": "/fems/usageAgainstTarget"
+  },
+  {
+    "path": "/fems/dailyWithEquipmentType"
+  },
+  {
+    "path": "/fems/billing"
+  },
+  {
+    "path": "/fems/compareTariffPlan"
+  },
+  {
+    "path": "/fems/compareTariffPlan/variableTotalEnergy"
+  },
+  {
+    "path": "/fems/compareTariffPlan/variableMaxPower"
+  },
+  {
+    "path": "/femsSettings"
+  },
+  {
+    "path": "/acLoader/list"
+  },
+  {
+    "path": "/grades"
+  },
+  {
+    "path": "/ItemGradeView"
+  },
+  {
+    "path": "/workerLogs"
+  },
+  {
+    "path": "/wlWithEslView"
+  },
+  {
+    "path": "/wmsLogWithPartner"
+  },
+  {
+    "path": "/printers"
+  },
+  {
+    "path": "/incomingInspections"
+  },
+  {
+    "path": "/incomingInspectionWithItemGrade"
+  },
+  {
+    "path": "/s3/list"
+  },
+  {
+    "path": "/s3/presigned"
+  },
+  {
+    "path": "/auditKpi"
+  },
+  {
+    "path": "/vehicles"
+  },
+  {
+    "path": "/equipmentLicenseAttachments"
+  },
+  {
+    "path": "/authorizations"
+  },
+  {
+    "path": "/menuLists"
+  },
+  {
+    "path": "/userDetailView"
+  }
+]

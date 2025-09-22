@@ -11,18 +11,18 @@ GET API Autocomplete
   - 생략하려면 `--no-update` 플래그를 사용하세요.
 
 - 1) 목록만 생성 (OpenAPI → JSON)
-  - `npm run generate:autoComplete`
+  - `npm run generate:autocomplete`
   - `node_modules/@sizlcorp/sizl-api-document/apisrc/openapi.yaml`에서 path param이 없는 `get:` 컬렉션 경로를 추출해
     `packages/core/src/api/get-endpoints.json`을 생성합니다.
 
 - 2) 전체 컴포넌트 템플릿 생성
-  - `npm run generate:autoComplete -- --emit-components`
+  - `npm run generate:autocomplete -- --emit-components`
   - 각 리소스에 대해 `packages/core/src/components/organisms/autocomplete/<Resource>GetAutocomplete.tsx` 파일을 생성합니다.
   - 이미 존재하는 파일은 건너뜁니다.
   - 해당 리소스의 React Query 훅이 존재하지 않으면 생성하지 않고 경고합니다.
 
 - 3) 선택적으로 일부만 생성(인터랙티브)
-  - `npm run generate:autoComplete -- --pick`
+  - `npm run generate:autocomplete -- --pick`
   - 표시되는 컬렉션 GET 목록에서 번호(예: `1,3,5` 또는 `2-6`) 혹은 경로 키워드(예: `items`, `grades`)를 입력해 선택합니다.
   - `*` 또는 `all` 입력 시 전체를 선택합니다.
   - 동작만 확인하려면 `--dry-run`을 함께 사용할 수 있습니다.

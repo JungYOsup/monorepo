@@ -1,4 +1,5 @@
 import { Icon } from "@core/components/atoms/Icon";
+import { EquipmentsGetAutocomplete } from "@core/components/organisms/autocomplete/EquipmentsGetAutocomplete";
 import { LocationsGetAutocomplete } from "@core/components/organisms/autocomplete/LocationsGetAutocomplete";
 import {
   Box,
@@ -179,18 +180,12 @@ export function SettingsModal({ opened, onClose }: SettingsModalProps) {
               <Divider mb="md" />
 
               <Stack gap="md">
-                <Select
+                <EquipmentsGetAutocomplete
                   label="담당 설비"
-                  placeholder="설비를 선택하세요"
-                  data={equipmentOptions}
+                  placeholder="담당 설비 선택"
                   {...form.getInputProps("equipment")}
-                  leftSection={<Icon name="cog" size={16} />}
-                  searchable
-                  clearable
                   description="현재 담당하고 있는 생산 설비를 선택하세요"
-                  className="touch-friendly"
                 />
-
                 <Grid>
                   <Grid.Col span={6}>
                     <LocationsGetAutocomplete
@@ -201,18 +196,11 @@ export function SettingsModal({ opened, onClose }: SettingsModalProps) {
                     />
                   </Grid.Col>
                   <Grid.Col span={6}>
-                    <Select
+                    <LocationsGetAutocomplete
                       label="입고 로케이션"
                       placeholder="입고 로케이션 선택"
-                      data={locationOptions.filter((loc) =>
-                        loc.value.includes("IN")
-                      )}
                       {...form.getInputProps("inboundLocation")}
-                      leftSection={<Icon name="packageIn" size={16} />}
-                      searchable
-                      clearable
                       description="자재 입고 시 사용할 로케이션"
-                      className="touch-friendly"
                     />
                   </Grid.Col>
                 </Grid>
