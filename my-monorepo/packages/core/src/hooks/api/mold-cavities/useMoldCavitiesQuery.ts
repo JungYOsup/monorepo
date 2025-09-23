@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useMoldCavitiesMoldCavitiesFindPostQuery = (params: DefaultApiMoldCavitiesFindPostRequest) => {
   return useQuery({
     ...moldCavities.moldCavitiesFindPost(params),
-    staleTime: 1000 * 60 * 5,
     enabled: !!params,
   });
 };
@@ -13,7 +12,6 @@ export const useMoldCavitiesMoldCavitiesFindPostQuery = (params: DefaultApiMoldC
 export const useMoldCavitiesMoldCavitiesGetQuery = (params: DefaultApiMoldCavitiesGetRequest) => {
   return useQuery({
     ...moldCavities.moldCavitiesGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

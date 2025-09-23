@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useWorkerWorkerLogsWorkerLogIdGetQuery = (params: MasterApiWorkerLogsWorkerLogIdGetRequest) => {
   return useQuery({
     ...worker.workerLogsWorkerLogIdGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

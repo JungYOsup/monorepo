@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useLotsLotsFindPostQuery = (params: DefaultApiLotsFindPostRequest) => {
   return useQuery({
     ...lots.lotsFindPost(params),
-    staleTime: 1000 * 60 * 5,
     enabled: !!params,
   });
 };
@@ -13,7 +12,6 @@ export const useLotsLotsFindPostQuery = (params: DefaultApiLotsFindPostRequest) 
 export const useLotsLotsGetQuery = (params: DefaultApiLotsGetRequest) => {
   return useQuery({
     ...lots.lotsGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };
@@ -21,7 +19,6 @@ export const useLotsLotsGetQuery = (params: DefaultApiLotsGetRequest) => {
 export const useLotsLotsLotIdGetQuery = (params: DefaultApiLotsLotIdGetRequest) => {
   return useQuery({
     ...lots.lotsLotIdGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

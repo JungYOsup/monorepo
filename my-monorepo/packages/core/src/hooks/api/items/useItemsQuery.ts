@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useItemsItemsFindPostQuery = (params: MasterApiItemsFindPostRequest) => {
   return useQuery({
     ...items.itemsFindPost(params),
-    staleTime: 1000 * 60 * 5,
     enabled: !!params,
   });
 };
@@ -13,7 +12,6 @@ export const useItemsItemsFindPostQuery = (params: MasterApiItemsFindPostRequest
 export const useItemsItemsGetQuery = (params: MasterApiItemsGetRequest) => {
   return useQuery({
     ...items.itemsGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };
@@ -21,7 +19,6 @@ export const useItemsItemsGetQuery = (params: MasterApiItemsGetRequest) => {
 export const useItemsItemsItemIdGetQuery = (params: MasterApiItemsItemIdGetRequest) => {
   return useQuery({
     ...items.itemsItemIdGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

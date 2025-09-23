@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const usePurchaseOrderItemsWithItemGradePurchaseOrderItemsWithItemGradeGetQuery = (params: ScmApiPurchaseOrderItemsWithItemGradeGetRequest) => {
   return useQuery({
     ...purchaseOrderItemsWithItemGrade.purchaseOrderItemsWithItemGradeGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

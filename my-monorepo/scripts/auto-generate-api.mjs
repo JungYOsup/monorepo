@@ -359,8 +359,8 @@ function genHooksModule({ resource, queries }) {
         : `...${resourceVar}.${q.name}(),`;
       const defaultOptions =
         q.name.toLowerCase().includes("find") && hasParams
-          ? `staleTime: 1000 * 60 * 5,\n    enabled: !!params,`
-          : `staleTime: 1000 * 60,\n    retry: 1,`;
+          ? `enabled: !!params,`
+          : `retry: 1,`;
       const sig = hasParams ? `(params: ${q.requestType})` : `()`;
       return `export const ${hookName} = ${sig} => {\n  return useQuery({\n    ${callExpr}\n    ${defaultOptions}\n  });\n};`;
     })

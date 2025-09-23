@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useMoldMoldCavitiesMoldCavityIdGetQuery = (params: DefaultApiMoldCavitiesMoldCavityIdGetRequest) => {
   return useQuery({
     ...mold.moldCavitiesMoldCavityIdGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useWorksWorkIdCheckCorrectionWorksWorkIdCheckCorrectionGetQuery = (params: ProductionActionApiWorksWorkIdCheckCorrectionGetRequest) => {
   return useQuery({
     ...worksWorkIdCheckCorrection.worksWorkIdCheckCorrectionGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

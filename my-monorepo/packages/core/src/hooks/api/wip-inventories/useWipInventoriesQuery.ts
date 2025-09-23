@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useWipInventoriesWipInventoriesGetQuery = (params: DefaultApiWipInventoriesGetRequest) => {
   return useQuery({
     ...wipInventories.wipInventoriesGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

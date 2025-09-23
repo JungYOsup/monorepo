@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useWlWithEslViewWlWithEslViewFindPostQuery = (params: MasterApiWlWithEslViewFindPostRequest) => {
   return useQuery({
     ...wlWithEslView.wlWithEslViewFindPost(params),
-    staleTime: 1000 * 60 * 5,
     enabled: !!params,
   });
 };
@@ -13,7 +12,6 @@ export const useWlWithEslViewWlWithEslViewFindPostQuery = (params: MasterApiWlWi
 export const useWlWithEslViewWlWithEslViewGetQuery = (params: MasterApiWlWithEslViewGetRequest) => {
   return useQuery({
     ...wlWithEslView.wlWithEslViewGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

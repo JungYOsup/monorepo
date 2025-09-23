@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useAbstractAbstractItemsAbstractItemIdGetQuery = (params: DefaultApiAbstractItemsAbstractItemIdGetRequest) => {
   return useQuery({
     ...abstract.abstractItemsAbstractItemIdGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

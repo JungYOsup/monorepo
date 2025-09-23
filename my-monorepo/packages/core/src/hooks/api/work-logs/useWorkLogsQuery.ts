@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useWorkLogsWorkLogsFindPostQuery = (params: DefaultApiWorkLogsFindPostRequest) => {
   return useQuery({
     ...workLogs.workLogsFindPost(params),
-    staleTime: 1000 * 60 * 5,
     enabled: !!params,
   });
 };
@@ -13,7 +12,6 @@ export const useWorkLogsWorkLogsFindPostQuery = (params: DefaultApiWorkLogsFindP
 export const useWorkLogsWorkLogsGetQuery = (params: DefaultApiWorkLogsGetRequest) => {
   return useQuery({
     ...workLogs.workLogsGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

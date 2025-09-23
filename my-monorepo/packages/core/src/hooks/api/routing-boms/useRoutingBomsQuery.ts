@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useRoutingBomsRoutingBomsFindPostQuery = (params: DefaultApiRoutingBomsFindPostRequest) => {
   return useQuery({
     ...routingBoms.routingBomsFindPost(params),
-    staleTime: 1000 * 60 * 5,
     enabled: !!params,
   });
 };
@@ -13,7 +12,6 @@ export const useRoutingBomsRoutingBomsFindPostQuery = (params: DefaultApiRouting
 export const useRoutingBomsRoutingBomsGetQuery = (params: DefaultApiRoutingBomsGetRequest) => {
   return useQuery({
     ...routingBoms.routingBomsGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

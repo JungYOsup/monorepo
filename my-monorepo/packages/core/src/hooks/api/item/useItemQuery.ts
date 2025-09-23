@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useItemItemGradeViewItemIdGetQuery = (params: DefaultApiItemGradeViewItemIdGetRequest) => {
   return useQuery({
     ...item.itemGradeViewItemIdGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

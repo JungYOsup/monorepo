@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useTransportationTransportationFindPostQuery = (params: ScmApiTransportationFindPostRequest) => {
   return useQuery({
     ...transportation.transportationFindPost(params),
-    staleTime: 1000 * 60 * 5,
     enabled: !!params,
   });
 };
@@ -13,7 +12,6 @@ export const useTransportationTransportationFindPostQuery = (params: ScmApiTrans
 export const useTransportationTransportationGetQuery = (params: ScmApiTransportationGetRequest) => {
   return useQuery({
     ...transportation.transportationGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };
@@ -21,7 +19,6 @@ export const useTransportationTransportationGetQuery = (params: ScmApiTransporta
 export const useTransportationTransportationTransportationIdGetQuery = (params: ScmApiTransportationTransportationIdGetRequest) => {
   return useQuery({
     ...transportation.transportationTransportationIdGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

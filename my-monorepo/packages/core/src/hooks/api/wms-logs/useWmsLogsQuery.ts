@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useWmsLogsWmsLogsFindPostQuery = (params: DefaultApiWmsLogsFindPostRequest) => {
   return useQuery({
     ...wmsLogs.wmsLogsFindPost(params),
-    staleTime: 1000 * 60 * 5,
     enabled: !!params,
   });
 };
@@ -13,7 +12,6 @@ export const useWmsLogsWmsLogsFindPostQuery = (params: DefaultApiWmsLogsFindPost
 export const useWmsLogsWmsLogsGetQuery = (params: DefaultApiWmsLogsGetRequest) => {
   return useQuery({
     ...wmsLogs.wmsLogsGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

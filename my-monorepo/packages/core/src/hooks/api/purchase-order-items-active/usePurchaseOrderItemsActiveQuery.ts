@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const usePurchaseOrderItemsActivePurchaseOrderItemsActiveGetQuery = (params: ScmApiPurchaseOrderItemsActiveGetRequest) => {
   return useQuery({
     ...purchaseOrderItemsActive.purchaseOrderItemsActiveGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

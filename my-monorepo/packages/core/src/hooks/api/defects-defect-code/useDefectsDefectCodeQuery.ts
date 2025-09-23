@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useDefectsDefectCodeDefectsDefectCodeGetQuery = (params: DefaultApiDefectsDefectCodeGetRequest) => {
   return useQuery({
     ...defectsDefectCode.defectsDefectCodeGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

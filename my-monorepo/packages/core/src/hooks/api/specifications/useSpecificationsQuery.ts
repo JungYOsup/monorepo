@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useSpecificationsSpecificationsFindPostQuery = (params: SpcApiSpecificationsFindPostRequest) => {
   return useQuery({
     ...specifications.specificationsFindPost(params),
-    staleTime: 1000 * 60 * 5,
     enabled: !!params,
   });
 };
@@ -13,7 +12,6 @@ export const useSpecificationsSpecificationsFindPostQuery = (params: SpcApiSpeci
 export const useSpecificationsSpecificationsGetQuery = (params: SpcApiSpecificationsGetRequest) => {
   return useQuery({
     ...specifications.specificationsGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };
@@ -21,7 +19,6 @@ export const useSpecificationsSpecificationsGetQuery = (params: SpcApiSpecificat
 export const useSpecificationsSpecificationsSpecificationIdGetQuery = (params: SpcApiSpecificationsSpecificationIdGetRequest) => {
   return useQuery({
     ...specifications.specificationsSpecificationIdGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

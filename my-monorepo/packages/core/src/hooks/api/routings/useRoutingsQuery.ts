@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useRoutingsRoutingsFindPostQuery = (params: DefaultApiRoutingsFindPostRequest) => {
   return useQuery({
     ...routings.routingsFindPost(params),
-    staleTime: 1000 * 60 * 5,
     enabled: !!params,
   });
 };
@@ -13,7 +12,6 @@ export const useRoutingsRoutingsFindPostQuery = (params: DefaultApiRoutingsFindP
 export const useRoutingsRoutingsGetQuery = (params: DefaultApiRoutingsGetRequest) => {
   return useQuery({
     ...routings.routingsGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };
@@ -21,7 +19,6 @@ export const useRoutingsRoutingsGetQuery = (params: DefaultApiRoutingsGetRequest
 export const useRoutingsRoutingsRoutingIdGetQuery = (params: DefaultApiRoutingsRoutingIdGetRequest) => {
   return useQuery({
     ...routings.routingsRoutingIdGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

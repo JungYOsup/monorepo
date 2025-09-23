@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useProductionProductionPlansConsumedLotIdLotIdGetQuery = (params: DefaultApiProductionPlansConsumedLotIdLotIdGetRequest) => {
   return useQuery({
     ...production.productionPlansConsumedLotIdLotIdGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };
@@ -13,7 +12,6 @@ export const useProductionProductionPlansConsumedLotIdLotIdGetQuery = (params: D
 export const useProductionProductionPlansProductionLotIdLotIdGetQuery = (params: DefaultApiProductionPlansProductionLotIdLotIdGetRequest) => {
   return useQuery({
     ...production.productionPlansProductionLotIdLotIdGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };
@@ -21,7 +19,6 @@ export const useProductionProductionPlansProductionLotIdLotIdGetQuery = (params:
 export const useProductionProductionPlansProductionPlanIdGetQuery = (params: DefaultApiProductionPlansProductionPlanIdGetRequest) => {
   return useQuery({
     ...production.productionPlansProductionPlanIdGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

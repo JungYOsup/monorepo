@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useAuthorizationsAuthorizationsAuthorizationIdGetQuery = (params: MasterApiAuthorizationsAuthorizationIdGetRequest) => {
   return useQuery({
     ...authorizations.authorizationsAuthorizationIdGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };
@@ -13,7 +12,6 @@ export const useAuthorizationsAuthorizationsAuthorizationIdGetQuery = (params: M
 export const useAuthorizationsAuthorizationsFindPostQuery = (params: MasterApiAuthorizationsFindPostRequest) => {
   return useQuery({
     ...authorizations.authorizationsFindPost(params),
-    staleTime: 1000 * 60 * 5,
     enabled: !!params,
   });
 };
@@ -21,7 +19,6 @@ export const useAuthorizationsAuthorizationsFindPostQuery = (params: MasterApiAu
 export const useAuthorizationsAuthorizationsGetQuery = (params: MasterApiAuthorizationsGetRequest) => {
   return useQuery({
     ...authorizations.authorizationsGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

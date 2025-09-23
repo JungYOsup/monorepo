@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useInspectionsActiveInspectionsActiveGetQuery = (params: SpcApiInspectionsActiveGetRequest) => {
   return useQuery({
     ...inspectionsActive.inspectionsActiveGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

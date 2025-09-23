@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useWorksOrderGroupSortWorksOrderGroupSortFindPostQuery = (params: DefaultApiWorksOrderGroupSortFindPostRequest) => {
   return useQuery({
     ...worksOrderGroupSort.worksOrderGroupSortFindPost(params),
-    staleTime: 1000 * 60 * 5,
     enabled: !!params,
   });
 };
@@ -13,7 +12,6 @@ export const useWorksOrderGroupSortWorksOrderGroupSortFindPostQuery = (params: D
 export const useWorksOrderGroupSortWorksOrderGroupSortGetQuery = (params: DefaultApiWorksOrderGroupSortGetRequest) => {
   return useQuery({
     ...worksOrderGroupSort.worksOrderGroupSortGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

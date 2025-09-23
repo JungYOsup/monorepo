@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const usePrintersPrintersFindPostQuery = (params: MasterApiPrintersFindPostRequest) => {
   return useQuery({
     ...printers.printersFindPost(params),
-    staleTime: 1000 * 60 * 5,
     enabled: !!params,
   });
 };
@@ -13,7 +12,6 @@ export const usePrintersPrintersFindPostQuery = (params: MasterApiPrintersFindPo
 export const usePrintersPrintersGetQuery = (params: MasterApiPrintersGetRequest) => {
   return useQuery({
     ...printers.printersGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };
@@ -21,7 +19,6 @@ export const usePrintersPrintersGetQuery = (params: MasterApiPrintersGetRequest)
 export const usePrintersPrintersPrinterIdGetQuery = (params: MasterApiPrintersPrinterIdGetRequest) => {
   return useQuery({
     ...printers.printersPrinterIdGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

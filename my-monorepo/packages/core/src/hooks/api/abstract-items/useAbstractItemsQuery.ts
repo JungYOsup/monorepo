@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useAbstractItemsAbstractItemsFindPostQuery = (params: DefaultApiAbstractItemsFindPostRequest) => {
   return useQuery({
     ...abstractItems.abstractItemsFindPost(params),
-    staleTime: 1000 * 60 * 5,
     enabled: !!params,
   });
 };
@@ -13,7 +12,6 @@ export const useAbstractItemsAbstractItemsFindPostQuery = (params: DefaultApiAbs
 export const useAbstractItemsAbstractItemsGetQuery = (params: DefaultApiAbstractItemsGetRequest) => {
   return useQuery({
     ...abstractItems.abstractItemsGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

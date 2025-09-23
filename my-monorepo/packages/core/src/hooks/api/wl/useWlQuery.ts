@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useWlWlWithEslViewWlWithEslViewIdGetQuery = (params: MasterApiWlWithEslViewWlWithEslViewIdGetRequest) => {
   return useQuery({
     ...wl.wlWithEslViewWlWithEslViewIdGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

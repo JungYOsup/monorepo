@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useWorksWorksFindPostQuery = (params: DefaultApiWorksFindPostRequest) => {
   return useQuery({
     ...works.worksFindPost(params),
-    staleTime: 1000 * 60 * 5,
     enabled: !!params,
   });
 };
@@ -13,7 +12,6 @@ export const useWorksWorksFindPostQuery = (params: DefaultApiWorksFindPostReques
 export const useWorksWorksGetQuery = (params: DefaultApiWorksGetRequest) => {
   return useQuery({
     ...works.worksGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };
@@ -21,7 +19,6 @@ export const useWorksWorksGetQuery = (params: DefaultApiWorksGetRequest) => {
 export const useWorksWorksItemWorkIdGetQuery = (params: DefaultApiWorksItemWorkIdGetRequest) => {
   return useQuery({
     ...works.worksItemWorkIdGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };
@@ -29,7 +26,6 @@ export const useWorksWorksItemWorkIdGetQuery = (params: DefaultApiWorksItemWorkI
 export const useWorksWorksOrderGroupSortWorkOrderGroupSortIdGetQuery = (params: DefaultApiWorksOrderGroupSortWorkOrderGroupSortIdGetRequest) => {
   return useQuery({
     ...works.worksOrderGroupSortWorkOrderGroupSortIdGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };
@@ -37,7 +33,6 @@ export const useWorksWorksOrderGroupSortWorkOrderGroupSortIdGetQuery = (params: 
 export const useWorksWorksOrderGroupWorkOrderGroupIdGetQuery = (params: DefaultApiWorksOrderGroupWorkOrderGroupIdGetRequest) => {
   return useQuery({
     ...works.worksOrderGroupWorkOrderGroupIdGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };
@@ -45,7 +40,6 @@ export const useWorksWorksOrderGroupWorkOrderGroupIdGetQuery = (params: DefaultA
 export const useWorksWorksWorkIdGetQuery = (params: DefaultApiWorksWorkIdGetRequest) => {
   return useQuery({
     ...works.worksWorkIdGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

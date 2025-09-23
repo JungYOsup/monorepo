@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useInventoriesBetweenInventoriesBetweenFindPostQuery = (params: DefaultApiInventoriesBetweenFindPostRequest) => {
   return useQuery({
     ...inventoriesBetween.inventoriesBetweenFindPost(params),
-    staleTime: 1000 * 60 * 5,
     enabled: !!params,
   });
 };
@@ -13,7 +12,6 @@ export const useInventoriesBetweenInventoriesBetweenFindPostQuery = (params: Def
 export const useInventoriesBetweenInventoriesBetweenGetQuery = (params: DefaultApiInventoriesBetweenGetRequest) => {
   return useQuery({
     ...inventoriesBetween.inventoriesBetweenGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

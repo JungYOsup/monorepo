@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useRoutingRoutingBomsRoutingBomIdGetQuery = (params: DefaultApiRoutingBomsRoutingBomIdGetRequest) => {
   return useQuery({
     ...routing.routingBomsRoutingBomIdGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };
@@ -13,7 +12,6 @@ export const useRoutingRoutingBomsRoutingBomIdGetQuery = (params: DefaultApiRout
 export const useRoutingRoutingOutsourcesRoutingOutsourceIdGetQuery = (params: DefaultApiRoutingOutsourcesRoutingOutsourceIdGetRequest) => {
   return useQuery({
     ...routing.routingOutsourcesRoutingOutsourceIdGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useUserDetailViewUserDetailViewFindPostQuery = (params: MasterApiUserDetailViewFindPostRequest) => {
   return useQuery({
     ...userDetailView.userDetailViewFindPost(params),
-    staleTime: 1000 * 60 * 5,
     enabled: !!params,
   });
 };
@@ -13,7 +12,6 @@ export const useUserDetailViewUserDetailViewFindPostQuery = (params: MasterApiUs
 export const useUserDetailViewUserDetailViewGetQuery = (params: MasterApiUserDetailViewGetRequest) => {
   return useQuery({
     ...userDetailView.userDetailViewGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

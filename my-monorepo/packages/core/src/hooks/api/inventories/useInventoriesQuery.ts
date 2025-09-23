@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useInventoriesInventoriesFindPostQuery = (params: DefaultApiInventoriesFindPostRequest) => {
   return useQuery({
     ...inventories.inventoriesFindPost(params),
-    staleTime: 1000 * 60 * 5,
     enabled: !!params,
   });
 };
@@ -13,7 +12,6 @@ export const useInventoriesInventoriesFindPostQuery = (params: DefaultApiInvento
 export const useInventoriesInventoriesGetQuery = (params: DefaultApiInventoriesGetRequest) => {
   return useQuery({
     ...inventories.inventoriesGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

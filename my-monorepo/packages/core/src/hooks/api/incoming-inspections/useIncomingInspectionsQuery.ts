@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useIncomingInspectionsIncomingInspectionsFindPostQuery = (params: SpcApiIncomingInspectionsFindPostRequest) => {
   return useQuery({
     ...incomingInspections.incomingInspectionsFindPost(params),
-    staleTime: 1000 * 60 * 5,
     enabled: !!params,
   });
 };
@@ -13,7 +12,6 @@ export const useIncomingInspectionsIncomingInspectionsFindPostQuery = (params: S
 export const useIncomingInspectionsIncomingInspectionsGetQuery = (params: SpcApiIncomingInspectionsGetRequest) => {
   return useQuery({
     ...incomingInspections.incomingInspectionsGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

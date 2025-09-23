@@ -8,7 +8,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
     "create:app": "node scripts/create-app.js",
-    "generate:document:auto": "node codex-template/auto-generate-api.mjs",
+    "generate:document:auto": "node scripts/auto-generate-api.mjs",
     "generate:autocomplete": "node scripts/generate-autocomplete.mjs"
   },
   "devDependencies": {
@@ -36,7 +36,7 @@
     "@mantine/form": "^8.3.1",
     "@mantine/hooks": "^8.3.1",
     "@mantine/notifications": "^8.3.1",
-    "@sizlcorp/sizl-api-document": "^2.1.281",
+    "@sizlcorp/sizl-api-document": "^2.1.282",
     "@tabler/icons-react": "^3.35.0",
     "@tanstack/react-query": "^5.89.0",
     "axios": "^1.12.2",

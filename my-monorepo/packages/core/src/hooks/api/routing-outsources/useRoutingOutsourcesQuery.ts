@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useRoutingOutsourcesRoutingOutsourcesFindPostQuery = (params: DefaultApiRoutingOutsourcesFindPostRequest) => {
   return useQuery({
     ...routingOutsources.routingOutsourcesFindPost(params),
-    staleTime: 1000 * 60 * 5,
     enabled: !!params,
   });
 };
@@ -13,7 +12,6 @@ export const useRoutingOutsourcesRoutingOutsourcesFindPostQuery = (params: Defau
 export const useRoutingOutsourcesRoutingOutsourcesGetQuery = (params: DefaultApiRoutingOutsourcesGetRequest) => {
   return useQuery({
     ...routingOutsources.routingOutsourcesGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

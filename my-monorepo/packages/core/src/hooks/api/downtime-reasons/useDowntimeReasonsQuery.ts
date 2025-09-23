@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useDowntimeReasonsDowntimeReasonsFindPostQuery = (params: DefaultApiDowntimeReasonsFindPostRequest) => {
   return useQuery({
     ...downtimeReasons.downtimeReasonsFindPost(params),
-    staleTime: 1000 * 60 * 5,
     enabled: !!params,
   });
 };
@@ -13,7 +12,6 @@ export const useDowntimeReasonsDowntimeReasonsFindPostQuery = (params: DefaultAp
 export const useDowntimeReasonsDowntimeReasonsGetQuery = (params: DefaultApiDowntimeReasonsGetRequest) => {
   return useQuery({
     ...downtimeReasons.downtimeReasonsGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

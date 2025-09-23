@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useEquipmentsEquipmentsGetQuery = (params: DefaultApiEquipmentsGetRequest) => {
   return useQuery({
     ...equipments.equipmentsGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

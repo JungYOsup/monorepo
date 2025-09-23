@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useItemCategoriesItemCategoriesFindPostQuery = (params: MasterApiItemCategoriesFindPostRequest) => {
   return useQuery({
     ...itemCategories.itemCategoriesFindPost(params),
-    staleTime: 1000 * 60 * 5,
     enabled: !!params,
   });
 };
@@ -13,7 +12,6 @@ export const useItemCategoriesItemCategoriesFindPostQuery = (params: MasterApiIt
 export const useItemCategoriesItemCategoriesGetQuery = (params: MasterApiItemCategoriesGetRequest) => {
   return useQuery({
     ...itemCategories.itemCategoriesGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

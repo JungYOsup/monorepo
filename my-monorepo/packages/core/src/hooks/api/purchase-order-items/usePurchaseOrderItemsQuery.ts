@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const usePurchaseOrderItemsPurchaseOrderItemsFindPostQuery = (params: ScmApiPurchaseOrderItemsFindPostRequest) => {
   return useQuery({
     ...purchaseOrderItems.purchaseOrderItemsFindPost(params),
-    staleTime: 1000 * 60 * 5,
     enabled: !!params,
   });
 };
@@ -13,7 +12,6 @@ export const usePurchaseOrderItemsPurchaseOrderItemsFindPostQuery = (params: Scm
 export const usePurchaseOrderItemsPurchaseOrderItemsGetQuery = (params: ScmApiPurchaseOrderItemsGetRequest) => {
   return useQuery({
     ...purchaseOrderItems.purchaseOrderItemsGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

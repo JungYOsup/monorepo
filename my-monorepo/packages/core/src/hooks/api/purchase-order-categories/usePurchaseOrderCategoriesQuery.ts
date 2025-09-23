@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const usePurchaseOrderCategoriesPurchaseOrderCategoriesFindPostQuery = (params: ScmApiPurchaseOrderCategoriesFindPostRequest) => {
   return useQuery({
     ...purchaseOrderCategories.purchaseOrderCategoriesFindPost(params),
-    staleTime: 1000 * 60 * 5,
     enabled: !!params,
   });
 };
@@ -13,7 +12,6 @@ export const usePurchaseOrderCategoriesPurchaseOrderCategoriesFindPostQuery = (p
 export const usePurchaseOrderCategoriesPurchaseOrderCategoriesGetQuery = (params: ScmApiPurchaseOrderCategoriesGetRequest) => {
   return useQuery({
     ...purchaseOrderCategories.purchaseOrderCategoriesGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useSlittingSlittingWorksOrderGroupSlittingWorkOrderGroupIdGetQuery = (params: DefaultApiSlittingWorksOrderGroupSlittingWorkOrderGroupIdGetRequest) => {
   return useQuery({
     ...slitting.slittingWorksOrderGroupSlittingWorkOrderGroupIdGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

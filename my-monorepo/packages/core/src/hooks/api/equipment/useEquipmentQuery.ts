@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useEquipmentEquipmentLicenseAttachmentsEquipmentLicenseAttachmentIdGetQuery = (params: MasterApiEquipmentLicenseAttachmentsEquipmentLicenseAttachmentIdGetRequest) => {
   return useQuery({
     ...equipment.equipmentLicenseAttachmentsEquipmentLicenseAttachmentIdGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

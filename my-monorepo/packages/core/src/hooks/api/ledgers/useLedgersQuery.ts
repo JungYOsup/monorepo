@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useLedgersLedgersFindPostQuery = (params: DefaultApiLedgersFindPostRequest) => {
   return useQuery({
     ...ledgers.ledgersFindPost(params),
-    staleTime: 1000 * 60 * 5,
     enabled: !!params,
   });
 };
@@ -13,7 +12,6 @@ export const useLedgersLedgersFindPostQuery = (params: DefaultApiLedgersFindPost
 export const useLedgersLedgersGetQuery = (params: DefaultApiLedgersGetRequest) => {
   return useQuery({
     ...ledgers.ledgersGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };
@@ -21,7 +19,6 @@ export const useLedgersLedgersGetQuery = (params: DefaultApiLedgersGetRequest) =
 export const useLedgersLedgersLedgerIdGetQuery = (params: DefaultApiLedgersLedgerIdGetRequest) => {
   return useQuery({
     ...ledgers.ledgersLedgerIdGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };

@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 export const useMoldsMoldsFindPostQuery = (params: MasterApiMoldsFindPostRequest) => {
   return useQuery({
     ...molds.moldsFindPost(params),
-    staleTime: 1000 * 60 * 5,
     enabled: !!params,
   });
 };
@@ -13,7 +12,6 @@ export const useMoldsMoldsFindPostQuery = (params: MasterApiMoldsFindPostRequest
 export const useMoldsMoldsGetQuery = (params: MasterApiMoldsGetRequest) => {
   return useQuery({
     ...molds.moldsGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };
@@ -21,7 +19,6 @@ export const useMoldsMoldsGetQuery = (params: MasterApiMoldsGetRequest) => {
 export const useMoldsMoldsMoldIdGetQuery = (params: MasterApiMoldsMoldIdGetRequest) => {
   return useQuery({
     ...molds.moldsMoldIdGet(params),
-    staleTime: 1000 * 60,
     retry: 1,
   });
 };
