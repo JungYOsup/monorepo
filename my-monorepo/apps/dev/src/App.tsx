@@ -12,6 +12,7 @@ import { AppShell, Box } from "@mantine/core";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
 import { useLocalStorage } from "@mantine/hooks";
+import "@mantine/notifications/styles.css";
 import { useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 

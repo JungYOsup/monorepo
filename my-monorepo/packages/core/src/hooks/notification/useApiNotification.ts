@@ -1,48 +1,66 @@
 import { notifications } from "@mantine/notifications";
-import axios from "axios";
-import { ErrorResponse } from "react-router-dom";
+import axios, { AxiosError, AxiosResponse } from "axios";
 
 export const useApiNotification = () => {
   const handleSuccess = (data: unknown) => {
+    // React Query handlers often receive AxiosResponse
+    let message: string | undefined;
+    const maybeAxios = data as AxiosResponse<any> | undefined;
+    if (
+      maybeAxios &&
+      typeof (maybeAxios as any)?.status === "number" &&
+      typeof (maybeAxios as any)?.headers === "object"
+    ) {
+      // Looks like AxiosResponse
+      const payload = (maybeAxios as AxiosResponse<any>).data;
+      message =
+        payload?.message ?? (maybeAxios as AxiosResponse<any>).statusText;
+    } else if (
+      data &&
+      typeof (data as any) === "object" &&
+      typeof (data as any).message === "string"
+    ) {
+      message = (data as { message: string }).message;
+    }
     notifications.show({
       title: "성공",
-      message: (data as { message: string }).message,
+      message: message || "요청이 성공적으로 처리되었습니다.",
       color: "green",
     });
   };
 
   const handleError = (error: unknown) => {
     if (axios.isAxiosError(error)) {
-      if (error.response) {
-        const httpStatus = error.response
-          ?.status as keyof typeof statusHandlers;
-        const errorResponse = error.response?.data as ErrorResponse;
-        const httpMessage =
-          errorResponse.data?.message || "알 수 없는 오류가 발생했습니다.";
-
-        // 에러 핸들러를 실행하기 전에 httpStatus가 유효한지 확인
-        const handler = httpStatus
-          ? statusHandlers[httpStatus]
+      console.log(error);
+      const err = error as AxiosError<any>;
+      if (err.response) {
+        const status = err.response.status as
+          | keyof typeof statusHandlers
+          | undefined;
+        const serverMessage: string | undefined =
+          (err.response.data?.message as string | undefined) ??
+          (err.response.data?.error as string | undefined);
+        const handler = status
+          ? (statusHandlers[status] ?? statusHandlers.default)
           : statusHandlers.default;
-        handler(httpMessage);
-        return;
-      } else {
-        notifications.show({
-          title: "서버 연결 오류",
-          message: "서버 연결이 원활하지 않습니다.",
-          color: "red",
-        });
+        handler(
+          serverMessage || err.message || "알 수 없는 오류가 발생했습니다."
+        );
         return;
       }
-    } else {
       notifications.show({
-        title: "알 수 없는 오류",
-        message: "네트워크 연결 오류 또는 기타 오류가 발생했습니다.",
+        title: "서버 연결 오류",
+        message: err.message || "서버 연결이 원활하지 않습니다.",
         color: "red",
       });
-
       return;
     }
+
+    notifications.show({
+      title: "알 수 없는 오류",
+      message: "네트워크 연결 오류 또는 기타 오류가 발생했습니다.",
+      color: "red",
+    });
   };
 
   const statusHandlers = {

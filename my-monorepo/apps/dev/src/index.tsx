@@ -3,7 +3,9 @@ import { ModalManager, useApiNotification } from "@core/index";
 
 import { MantineProvider } from "@mantine/core";
 import { DatesProvider } from "@mantine/dates";
+import { Notifications } from "@mantine/notifications";
 import {
+  MutationCache,
   QueryCache,
   QueryClient,
   QueryClientProvider,
@@ -19,13 +21,10 @@ const root = ReactDOM.createRoot(
 
 const { handleError, handleSuccess } = useApiNotification();
 const queryClient = new QueryClient({
-  defaultOptions: {
-    mutations: {
-      onError: handleError,
-      onSuccess: handleSuccess,
-    },
-  },
-  queryCache: new QueryCache({
+  // Query 성공 알림은 과도할 수 있어 에러만 전역 처리
+  queryCache: new QueryCache({ onError: handleError }),
+  // 모든 뮤테이션 성공/실패를 전역 처리
+  mutationCache: new MutationCache({
     onError: handleError,
     onSuccess: handleSuccess,
   }),
@@ -40,6 +39,7 @@ root.render(
             <ModalProvider>
               <App />
               <ModalManager />
+              <Notifications limit={1} />
             </ModalProvider>
           </DatesProvider>
         </MantineProvider>
