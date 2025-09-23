@@ -11,7 +11,6 @@ import {
   Grid,
   Group,
   Modal,
-  Notification,
   PasswordInput,
   Stack,
   Text,
@@ -20,7 +19,7 @@ import {
 import { useForm } from "@mantine/form";
 import { MasterApiUsersUserIdPutRequest } from "@sizlcorp/sizl-api-document/dist/models";
 import { useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export interface SettingsModalProps {
   opened: boolean;
@@ -49,8 +48,6 @@ export function SettingsModal({ opened, onClose }: SettingsModalProps) {
     fromLocationCode,
     printerCode,
   } = userData || {};
-
-  const [showSuccess, setShowSuccess] = useState(false);
 
   const form = useForm<SettingsFormData>({
     initialValues: {
@@ -89,9 +86,7 @@ export function SettingsModal({ opened, onClose }: SettingsModalProps) {
 
       await queryClient.invalidateQueries({ queryKey: ["authWhoamiGet"] });
 
-      setShowSuccess(true);
       setTimeout(() => {
-        setShowSuccess(false);
         onClose();
       }, 2000);
     } catch (error) {
@@ -113,7 +108,6 @@ export function SettingsModal({ opened, onClose }: SettingsModalProps) {
         inboundLocation: toLocationCode || "",
         printer: printerCode || "",
       });
-      setShowSuccess(false);
     }
   }, [
     opened,
@@ -141,18 +135,6 @@ export function SettingsModal({ opened, onClose }: SettingsModalProps) {
       padding="xl"
     >
       <Box>
-        {showSuccess && (
-          <Notification
-            icon={<Icon name="check" size={16} />}
-            color="green"
-            title="저장 완료"
-            mb="md"
-            withCloseButton={false}
-          >
-            환경 설정이 성공적으로 저장되었습니다.
-          </Notification>
-        )}
-
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <Stack gap="lg">
             {/* 계정 정보 섹션 */}

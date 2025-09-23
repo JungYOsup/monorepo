@@ -47,8 +47,6 @@ export function PrintersGetAutocomplete<T = any>({
 
   const enabled = debounced.trim().length >= minLength;
 
-  console.log(value, "value");
-
   const { data: res } = usePrintersPrintersGetQuery({
     search: enabled ? debounced : undefined,
     page: enabled ? page : 1,
