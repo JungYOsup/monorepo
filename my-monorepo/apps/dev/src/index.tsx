@@ -1,10 +1,13 @@
 import { ModalProvider } from "@core/context/modal/ModalContext";
-import { ModalManager } from "@core/index";
+import { ModalManager, useApiNotification } from "@core/index";
 
 import { MantineProvider } from "@mantine/core";
 import { DatesProvider } from "@mantine/dates";
-import { Notifications } from "@mantine/notifications";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  QueryCache,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 import App from "apps/dev/src/App";
 import React from "react";
 import ReactDOM from "react-dom/client";
@@ -14,7 +17,19 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-const queryClient = new QueryClient();
+const { handleError, handleSuccess } = useApiNotification();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    mutations: {
+      onError: handleError,
+      onSuccess: handleSuccess,
+    },
+  },
+  queryCache: new QueryCache({
+    onError: handleError,
+    onSuccess: handleSuccess,
+  }),
+});
 
 root.render(
   <React.StrictMode>
@@ -25,7 +40,6 @@ root.render(
             <ModalProvider>
               <App />
               <ModalManager />
-              <Notifications />
             </ModalProvider>
           </DatesProvider>
         </MantineProvider>
