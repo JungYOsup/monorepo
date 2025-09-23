@@ -49,7 +49,7 @@ export function PrintersGetAutocomplete<T = any>({
 
   console.log(value, "value");
 
-  const { data: res, isFetching } = usePrintersPrintersGetQuery({
+  const { data: res } = usePrintersPrintersGetQuery({
     search: enabled ? debounced : undefined,
     page: enabled ? page : 1,
     pageSize: enabled ? pageSize : pageSize,
@@ -112,9 +112,7 @@ export function PrintersGetAutocomplete<T = any>({
   return (
     <Autocomplete
       label={label}
-      description={
-        description ?? (isFetching && enabled ? "불러오는 중…" : undefined)
-      }
+      description={description}
       placeholder={placeholder}
       value={value}
       onChange={(v) => {

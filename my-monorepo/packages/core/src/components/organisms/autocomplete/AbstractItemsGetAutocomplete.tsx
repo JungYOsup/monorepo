@@ -50,7 +50,7 @@ export function AbstractItemsGetAutocomplete<
 
   const enabled = debounced.trim().length >= minLength;
 
-  const { data: res, isFetching } = useAbstractItemsAbstractItemsGetQuery({
+  const { data: res } = useAbstractItemsAbstractItemsGetQuery({
     search: enabled ? debounced : undefined,
     page: enabled ? page : 1,
     pageSize: enabled ? pageSize : pageSize,
@@ -94,9 +94,7 @@ export function AbstractItemsGetAutocomplete<
   return (
     <Autocomplete
       label={label}
-      description={
-        description ?? (isFetching && enabled ? "불러오는 중…" : undefined)
-      }
+      description={description}
       placeholder={placeholder}
       value={value}
       onChange={(v) => {

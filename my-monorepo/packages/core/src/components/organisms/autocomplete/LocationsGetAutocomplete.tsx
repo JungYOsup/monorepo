@@ -56,7 +56,7 @@ export function LocationsGetAutocomplete<T = LocationsGet200ResponseRowsInner>({
 
   const enabled = debounced.trim().length >= minLength;
 
-  const { data: res, isFetching } = useLocationsLocationsGetQuery({
+  const { data: res } = useLocationsLocationsGetQuery({
     search: enabled ? debounced : undefined,
     page: enabled ? page : 1,
     pageSize: enabled ? pageSize : pageSize,
@@ -193,9 +193,7 @@ export function LocationsGetAutocomplete<T = LocationsGet200ResponseRowsInner>({
           return rest;
         })()
       }
-      description={
-        description ?? (isFetching && enabled ? "불러오는 중…" : undefined)
-      }
+      description={description}
     />
   );
 }

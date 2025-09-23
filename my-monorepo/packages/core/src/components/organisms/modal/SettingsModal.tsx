@@ -3,6 +3,7 @@ import { EquipmentsGetAutocomplete } from "@core/components/organisms/autocomple
 import { LocationsGetAutocomplete } from "@core/components/organisms/autocomplete/LocationsGetAutocomplete";
 import { PrintersGetAutocomplete } from "@core/components/organisms/autocomplete/PrintersGetAutocomplete";
 import { useAuthWhoamiAuthWhoamiGetQuery } from "@core/hooks/api/auth-whoami/useAuthWhoamiQuery";
+import { useUsersUsersUserIdPutMutation } from "@core/hooks/api/users/useUsersMutation";
 import {
   Box,
   Button,
@@ -17,7 +18,9 @@ import {
   TextInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useState } from "react";
+import { MasterApiUsersUserIdPutRequest } from "@sizlcorp/sizl-api-document/dist/models";
+import { useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 
 export interface SettingsModalProps {
   opened: boolean;
@@ -36,17 +39,18 @@ interface SettingsFormData {
 export function SettingsModal({ opened, onClose }: SettingsModalProps) {
   const { data } = useAuthWhoamiAuthWhoamiGetQuery();
   const userData = data?.data;
+  const queryClient = useQueryClient();
+  const { mutateAsync: updateUser } = useUsersUsersUserIdPutMutation();
   const {
+    id,
     username,
     equipmentCode,
     toLocationCode,
     fromLocationCode,
     printerCode,
   } = userData || {};
-  const [isLoading, setIsLoading] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
 
-  console.log(userData);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const form = useForm<SettingsFormData>({
     initialValues: {
@@ -68,30 +72,57 @@ export function SettingsModal({ opened, onClose }: SettingsModalProps) {
   });
 
   const handleSubmit = async (values: SettingsFormData) => {
-    setIsLoading(true);
-
     try {
-      // Mock API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      if (!id) throw new Error("사용자 ID를 확인할 수 없습니다");
 
-      console.log("Settings saved:", values);
+      const payload = {
+        equipmentCode: values.equipment ?? "",
+        fromLocationCode: values.outboundLocation ?? "",
+        toLocationCode: values.inboundLocation ?? "",
+        printerCode: values.printer ?? "",
+      } as MasterApiUsersUserIdPutRequest["usersUserIdDeleteRequest"];
+
+      await updateUser({
+        userId: id,
+        usersUserIdDeleteRequest: payload,
+      } as MasterApiUsersUserIdPutRequest);
+
+      await queryClient.invalidateQueries({ queryKey: ["authWhoamiGet"] });
+
       setShowSuccess(true);
-
-      // Auto hide success notification after 3 seconds
       setTimeout(() => {
         setShowSuccess(false);
         onClose();
       }, 2000);
     } catch (error) {
       console.error("Settings save failed:", error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   const handleReset = () => {
     form.setValues({});
   };
+
+  useEffect(() => {
+    if (opened) {
+      form.setValues({
+        userId: username || "",
+        password: "*********",
+        equipment: equipmentCode || "",
+        outboundLocation: fromLocationCode || "",
+        inboundLocation: toLocationCode || "",
+        printer: printerCode || "",
+      });
+      setShowSuccess(false);
+    }
+  }, [
+    opened,
+    username,
+    equipmentCode,
+    fromLocationCode,
+    toLocationCode,
+    printerCode,
+  ]);
 
   return (
     <Modal
@@ -205,22 +236,16 @@ export function SettingsModal({ opened, onClose }: SettingsModalProps) {
                 variant="subtle"
                 leftSection={<Icon name="rotateLeft" size={16} />}
                 onClick={handleReset}
-                disabled={isLoading}
               >
                 초기화
               </Button>
 
               <Group gap="sm">
-                <Button
-                  variant="outline"
-                  onClick={onClose}
-                  disabled={isLoading}
-                >
+                <Button variant="outline" onClick={onClose}>
                   취소
                 </Button>
                 <Button
                   type="submit"
-                  loading={isLoading}
                   leftSection={<Icon name="save" size={16} />}
                   className="touch-friendly"
                 >

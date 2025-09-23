@@ -47,7 +47,7 @@ export function EquipmentsGetAutocomplete<T = any>({
 
   const enabled = debounced.trim().length >= minLength;
 
-  const { data: res, isFetching } = useEquipmentsEquipmentsGetQuery({
+  const { data: res } = useEquipmentsEquipmentsGetQuery({
     search: enabled ? debounced : undefined,
     page: enabled ? page : 1,
     pageSize: enabled ? pageSize : pageSize,
@@ -108,9 +108,7 @@ export function EquipmentsGetAutocomplete<T = any>({
   return (
     <Autocomplete
       label={label}
-      description={
-        description ?? (isFetching && enabled ? "불러오는 중…" : undefined)
-      }
+      description={description}
       placeholder={placeholder}
       value={value}
       onChange={(v) => {

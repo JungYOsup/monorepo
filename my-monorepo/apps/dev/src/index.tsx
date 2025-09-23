@@ -1,8 +1,9 @@
 import { ModalProvider } from "@core/context/modal/ModalContext";
 import { ModalManager } from "@core/index";
+import { createAppQueryClient } from "@core/query/queryClient";
 import { MantineProvider } from "@mantine/core";
 import { DatesProvider } from "@mantine/dates";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import App from "apps/dev/src/App";
 import React from "react";
 import ReactDOM from "react-dom/client";
@@ -12,7 +13,7 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-const queryClient = new QueryClient();
+const queryClient = createAppQueryClient();
 
 root.render(
   <React.StrictMode>
