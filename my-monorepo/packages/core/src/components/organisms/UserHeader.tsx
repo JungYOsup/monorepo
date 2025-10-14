@@ -1,5 +1,5 @@
-import { useLogoutModal } from "@core/hooks/modal/useLogoutModal";
-import { useSettingsModal } from "@core/hooks/modal/useSettingsModal";
+import { useLogoutModal } from "@core/hooks/ui/modal/useLogoutModal";
+import { useSettingsModal } from "@core/hooks/ui/modal/useSettingsModal";
 import {
   Avatar,
   Box,

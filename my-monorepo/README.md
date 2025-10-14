@@ -1,163 +1,104 @@
-## ✨ 수정된 `README.md`
+# 🏗️ Monorepo Project Guide
 
-```md
-# 🏗️ Monorepo Template Guide
+이 저장소는 터보레포와 npm 워크스페이스로 관리되는 모노레포입니다. 여러 업체용 앱을 동시에 개발하면서도 공통 기능은 공유하도록 설계되었습니다.
 
-이 레포는 다수의 회사(업체) 앱을 관리하기 위한 **모노레포 기반 프로젝트 구조**입니다.  
-공통 기능은 `core`로 분리하고, 새 앱은 `dev` 디렉토리를 기준으로 자동 생성됩니다.
+---
 
-## 📦 구조 설명
+## 📦 최상위 구조
 
+```
 my-monorepo/
-├── apps/
-│ ├── \_\_template/ ← 개발자 참고용: 템플릿 보관소 (직접 생성에 사용되진 않음)
-│ ├── dev/ ← 앱 생성 시 실제 복사 기준이 되는 템플릿
-│ ├── company-a/ ← 업체 A의 앱
-│ └── company-b/ ← 업체 B의 앱
+├── apps/                # 업체별 앱 소스
+│   ├── dev/             # 신규 앱 생성 시 기준이 되는 샌드박스
+│   ├── template/        # 기본 템플릿(직접 배포되지는 않음)
+│   └── <vendor>/        # 업체별 실제 앱
 │
 ├── packages/
-│ └── core/ ← 모든 앱에서 사용하는 공통 코드 (컴포넌트, 유틸, 훅 등)
+│   └── core/            # 모든 앱이 공유하는 공통 모듈
 │
-├── scripts/
-│ └── create-app.ts ← 신규 업체 앱 생성 CLI 스크립트
-│
-├── package.json ← npm workspace 및 turbo 설정
-└── tsconfig.json ← 전체 설정 공통 적용
+├── scripts/             # 프로젝트 관리 스크립트
+├── turbo.json
+└── package.json
 ```
 
----
-
-## ✨ 핵심 원칙
-
-### 1. `core`는 공통 기능 저장소입니다.
-
-- 컴포넌트, API 유틸, 훅, 상수 등 반복되는 코드를 `packages/core`에 작성합니다.
-- 모든 앱은 이 `core`를 import하여 재사용합니다.
-
-예시:
-
-```tsx
-import { Button } from "core/components/Button";
-```
-
----
-
-### 2. `dev`는 새로운 회사 앱의 기준이 됩니다.
-
-- `dev` 디렉토리는 실제 앱 생성 시 복사되는 기준 디렉토리입니다.
-- UI 구조, 라우팅 예시, core 활용법 등이 포함되어 있습니다.
-
-> `template`은 개발자가 템플릿을 참고/수정할 때만 사용합니다.
-
----
-
-## 🚀 새로운 앱 생성 방법
-
-터미널에서 아래 명령어 실행:
+### 앱 생성
 
 ```bash
-npm run create-app company-c
+npm run create-app <vendor-name>
 ```
 
-실행 결과:
-
-- `apps/company-c` 디렉토리가 생성됨
-- `dev`를 기준으로 파일 복사됨
-- `package.json`의 name 필드가 `"company-c"`로 자동 수정됨
-- `tsconfig.json`의 paths alias에 `@company-c/*`가 등록됨
-- 모든 파일 내 `@template/` import 경로가 `@company-c/`로 자동 치환됨
+명령을 실행하면 `apps/<vendor-name>` 디렉터리가 생성되고, `apps/dev` 내용을 기반으로 초기 파일이 세팅됩니다.
 
 ---
 
-## 🛠 개발 및 실행
+## 🧱 `packages/core` 구성
 
-루트에서 아래 명령어로 모든 앱의 dev 서버 실행:
-
-```bash
-npm run dev
-```
-
-특정 앱만 실행하고 싶다면 해당 앱 디렉토리에서 실행:
-
-```bash
-cd apps/company-a
-npm install
-npm run dev
-```
-
-또는 루트에서 turbo를 사용해 특정 앱만 실행:
-
-```bash
-npx turbo run dev --filter=company-a
-```
-
-> 이 명령어는 루트 디렉토리에서 특정 앱만 선택적으로 실행할 때 사용합니다.
-> apps/company-a/package.json에 아래처럼 `name`과 `dev` 스크립트가 명시되어 있어야 합니다.
-
-```json
-{
-  "name": "company-a",
-  "scripts": {
-    "dev": "vite"
-  }
-}
-```
-
----
-
-## 📁 core 디렉토리 구성 예시
+`core` 패키지는 앱 간에 공유되는 UI, 훅, 서비스 로직을 담습니다.
 
 ```
-core/
-├── components/
-│   └── Button.tsx
+packages/core/src/
+├── api/                 # OpenAPI 기반 API 모듈
+├── components/          # 재사용 가능한 UI 컴포넌트
+├── handlers/            # (이벤트/서비스별) 도메인 핸들러
 ├── hooks/
-│   └── useFetch.ts
-├── lib/
-│   └── api.ts
-└── index.ts               ← export 모듈 관리
+│   ├── api/             # 단일 API 호출을 위한 얇은 React Query 래퍼
+│   ├── services/        # 여러 API를 조합해 도메인 데이터를 만드는 로직
+│   └── ui/              # UI 상태/컨트롤(모달, 알림 등)을 다루는 훅
+├── instance/            # Axios 인스턴스, 인터셉터 설정
+└── util/                # 공통 유틸리티
+```
+
+- `hooks/api`: API 하나당 하나의 훅을 제공하는 최소 래퍼입니다. (예: `useAuthWhoamiAuthWhoamiGetQuery`)
+- `hooks/services`: 여러 API 호출을 조합하거나 선행/후행 호출이 필요한 도메인 로직을 구성합니다. (예: `useWorkOrdersServices`)
+- `hooks/ui`: 모달, 알림 등 **UI 상태 훅**을 관리하는 공간입니다.
+- `handlers`: 이벤트성 액션(`login`)이나 서비스별 조합 로직을 래핑해 UI에서 바로 사용할 수 있게 합니다. 또한, 업체별로 custom이 될 수 있기때문에, 객체형식으로 만들어야합니다.
+
+이렇게 레이어를 구분하면 단일 API 호출과 복합 도메인 로직, UI 상태 관리가 서로 분리되어 유지보수가 쉽습니다.
+
+---
+
+## 🚀 개발/빌드 스크립트
+
+루트에서 터보 명령을 실행해 모든 워크스페이스를 동시에 제어할 수 있습니다.
+
+| 명령어                | 설명                                       |
+| --------------------- | ------------------------------------------ |
+| `npm run dev`         | dev 스크립트를 가진 모든 워크스페이스 실행 |
+| `npm run build`       | 전체 빌드                                  |
+| `npm run lint`        | ESLint 실행                                |
+| `npm run check-types` | TypeScript 프로젝트 참조 검사              |
+| `npm run format`      | Prettier 포맷                              |
+
+개별 앱만 실행하려면 필터링을 사용하세요.
+
+```bash
+turbo run dev --filter=<workspace-name>
+# 또는
+npm run dev -w apps/<workspace-name>
 ```
 
 ---
 
-## ✅ 개발 체크리스트
+## ✅ 작업 시 유의 사항
 
-- [x] 공통 기능은 반드시 `core`에 작성
-- [x] 새로운 앱은 `create-app` 명령어로 생성
-- [x] 템플릿 수정 시 `dev` 디렉토리를 업데이트
-- [x] 앱 내부에서 `core` 사용을 테스트할 것
-- [x] 모든 앱은 `vite`, `react`, `typescript` 기반
+- 공통 UI/로직은 `packages/core`에 작성합니다.
+- 복잡한 도메인 로직은 `hooks/services`나 `handlers`에서 조합하고, 컴포넌트에서는 가공된 데이터만 다루도록 합니다.
+- UI 상태 훅(모달, 알림 등)은 `hooks/ui` 아래에 배치합니다.
+- 업체별 커스터마이징이 필요할 경우, 공통 핸들러를 래핑한 어댑터를 업체 앱 쪽에 배치합니다.
 
 ---
 
 ## 🙋 FAQ
 
-### Q. 회사마다 UI가 다르면 어떻게 하나요?
+**Q. 업체마다 API 조합이 다른데 어떻게 관리하나요?**  
+→ `hooks/services`나 `handlers`에서 공통 베이스를 만들고, 업체별 어댑터를 추가해 옵션/매핑만 덮어씁니다.
 
-> `dev`를 기반으로 만든 후, 각 앱 내부에서 `core` 컴포넌트를 override 하거나 layout만 교체하세요.
+**Q. UI 동작(모달/토스트)을 어디서 관리하나요?**  
+→ `hooks/ui/*`에 UI 상태 훅을 정의하고, 컴포넌트에서 해당 훅을 호출합니다.
 
-### Q. 공통 코드를 수정하면 다른 앱에도 적용되나요?
-
-> 네, `core`를 수정하면 모든 앱에서 적용됩니다.
-> 단, 앱마다 다르게 동작시켜야 할 경우 `props`나 `context`로 분기처리하세요.
-
-### Q. 회사마다 비즈니스 로직이 다를 경우?
-
-> Wrapper 패턴을 사용해 core의 기본 로직을 래핑하세요.
-
-예시:
-
-- 공통 로직: `core/business/order.ts`
-- 회사 A 래퍼: `apps/company-a/lib/orderLogic.ts`
-
-```ts
-// company-a/lib/orderLogic.ts
-import { getOrderStatusLabel as baseLabel } from "core/business/order";
-
-export function getOrderStatusLabel(status: string): string {
-  if (status === "PAID") return "A사 전용: 결제 완료";
-  return baseLabel(status);
-}
-```
+**Q. 새 앱에서 공통 기능을 사용하려면?**  
+→ `@core/*` 경로로 `packages/core` 모듈을 import 하면 됩니다.
 
 ---
+
+필요한 내용이 있으면 README를 계속 보완하며 유지해 주세요! 🙂

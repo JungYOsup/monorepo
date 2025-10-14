@@ -18,7 +18,7 @@ export * from "./components/organisms/modal/ModalManager";
 export * from "./util/findTemplates";
 
 // hooks
-export * from "./hooks/modal/useLogoutModal";
-export * from "./hooks/modal/useModal";
-export * from "./hooks/modal/useSettingsModal";
-export * from "./hooks/notification/useApiNotification";
+export * from "./hooks/ui/modal/useLogoutModal";
+export * from "./hooks/ui/modal/useModal";
+export * from "./hooks/ui/modal/useSettingsModal";
+export * from "./hooks/ui/notification/useApiNotification";
