@@ -33,7 +33,7 @@ const queryClient = new QueryClient({
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <TenantProvider companyName="core">
+      <TenantProvider companyName="dev">
         <QueryClientProvider client={queryClient}>
           <MantineProvider defaultColorScheme="light">
             <DatesProvider settings={{ locale: "ko" }}>

@@ -5,24 +5,116 @@ import {
   NavigationPage,
   QualityResultsPage,
   UserHeader,
+  useTenantConfig,
   WorkOrdersPage,
   WorkOrderStep,
 } from "@core";
+import { PageId } from "@core/tenant/types";
 import { AppShell, Box } from "@mantine/core";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
 import { useLocalStorage } from "@mantine/hooks";
 import "@mantine/notifications/styles.css";
-import { useState } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+
+const NAVIGATION_PAGE_TO_TENANT_PAGE: Record<NavigationPage, PageId> = {
+  workorders: "orders/list",
+  inventory: "inventory/list",
+  quality: "quality/results",
+};
+
+const normalizePath = (path: string) => {
+  if (!path) {
+    return "/";
+  }
+  if (path === "/") {
+    return path;
+  }
+  return path.replace(/\/+$/, "");
+};
+
+const ensureLeadingSlash = (path: string) =>
+  path.startsWith("/") ? path : `/${path}`;
+
+const resolveNavigationPage = (
+  pathname: string,
+  routes: Record<NavigationPage, string>
+): NavigationPage | undefined => {
+  const normalized = normalizePath(pathname);
+  return (Object.entries(routes) as Array<[NavigationPage, string]>).find(
+    ([, path]) => {
+      const normalizedTarget = normalizePath(path);
+      return (
+        normalized === normalizedTarget ||
+        normalized.startsWith(`${normalizedTarget}/`)
+      );
+    }
+  )?.[0];
+};
 
 export default function App() {
+  const tenantConfig = useTenantConfig();
+  const enabledPages = useMemo<NavigationPage[]>(() => {
+    const pages = (
+      Object.entries(NAVIGATION_PAGE_TO_TENANT_PAGE) as Array<
+        [NavigationPage, PageId]
+      >
+    )
+      .filter(([, pageId]) => tenantConfig.pages?.[pageId]?.display !== false)
+      .map(([navPage]) => navPage);
+
+    return pages.length > 0 ? pages : ["workorders"];
+  }, [tenantConfig]);
+
+  const pageRoutes = useMemo<Record<NavigationPage, string>>(() => {
+    const entries = Object.entries(NAVIGATION_PAGE_TO_TENANT_PAGE) as Array<
+      [NavigationPage, PageId]
+    >;
+
+    return entries.reduce<Record<NavigationPage, string>>(
+      (acc, [navPage, pageId]) => {
+        const endpoint = tenantConfig.pages?.[pageId]?.endpoint;
+        const fallback = `/${navPage}`;
+        const normalized = normalizePath(
+          ensureLeadingSlash(endpoint ?? fallback)
+        );
+        acc[navPage] = normalized;
+        return acc;
+      },
+      {} as Record<NavigationPage, string>
+    );
+  }, [tenantConfig]);
+
   const [isAuthenticated] = useLocalStorage({
     key: "isAuthenticated",
   });
   const isUserAuthenticated = JSON.parse(isAuthenticated || "false");
 
-  const [currentPage, setCurrentPage] = useState<NavigationPage>("workorders");
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const derivedPageFromPath = useMemo<NavigationPage | undefined>(() => {
+    if (!Object.keys(pageRoutes).length) {
+      return undefined;
+    }
+    return resolveNavigationPage(location.pathname, pageRoutes);
+  }, [location.pathname, pageRoutes]);
+
+  const currentPage = useMemo<NavigationPage>(() => {
+    if (derivedPageFromPath && enabledPages.includes(derivedPageFromPath)) {
+      return derivedPageFromPath;
+    }
+
+    return enabledPages[0] ?? "workorders";
+  }, [derivedPageFromPath, enabledPages]);
+
   const [currentStep, setCurrentStep] = useState<WorkOrderStep>("list");
   const [workOrderStatus, setWorkOrderStatus] = useState<
     "pending" | "ongoing" | "done"
@@ -38,15 +130,71 @@ export default function App() {
     report: false,
   });
 
-  const handlePageChange = (page: NavigationPage) => {
-    setCurrentPage(page);
-    // Reset work order step when changing main pages
-    if (page !== "workorders") {
+  useEffect(() => {
+    if (!isUserAuthenticated || enabledPages.length === 0) {
+      return;
+    }
+
+    const targetPath = pageRoutes[currentPage];
+    if (!targetPath) {
+      return;
+    }
+
+    const normalizedCurrent = normalizePath(location.pathname);
+    const normalizedTarget = normalizePath(targetPath);
+    if (
+      normalizedCurrent !== normalizedTarget &&
+      !normalizedCurrent.startsWith(`${normalizedTarget}/`)
+    ) {
+      navigate(targetPath || "/", { replace: true });
+    }
+  }, [
+    currentPage,
+    enabledPages,
+    isUserAuthenticated,
+    location.pathname,
+    navigate,
+    pageRoutes,
+  ]);
+
+  useEffect(() => {
+    if (currentPage !== "workorders") {
       setCurrentStep("list");
     }
-  };
+  }, [currentPage]);
+
+  const handlePageChange = useCallback(
+    (page: NavigationPage) => {
+      if (!enabledPages.includes(page)) {
+        return;
+      }
+
+      const targetPath = pageRoutes[page];
+      if (!targetPath) {
+        return;
+      }
+
+      const normalizedCurrent = normalizePath(location.pathname);
+      const normalizedTarget = normalizePath(targetPath);
+      if (
+        normalizedCurrent !== normalizedTarget &&
+        !normalizedCurrent.startsWith(`${normalizedTarget}/`)
+      ) {
+        navigate(targetPath);
+      }
+
+      if (page !== "workorders") {
+        setCurrentStep("list");
+      }
+    },
+    [enabledPages, location.pathname, navigate, pageRoutes]
+  );
 
   const handleStepChange = (step: WorkOrderStep) => {
+    if (currentPage !== "workorders") {
+      return;
+    }
+
     setCurrentStep(step);
 
     // Mark step as completed when visited
@@ -61,6 +209,10 @@ export default function App() {
   };
 
   const renderMainContent = () => {
+    if (!enabledPages.includes(currentPage)) {
+      return null;
+    }
+
     switch (currentPage) {
       case "workorders":
         return (
@@ -76,14 +228,7 @@ export default function App() {
       case "quality":
         return <QualityResultsPage />;
       default:
-        return (
-          <WorkOrdersPage
-            currentStep={currentStep}
-            onStepChange={handleStepChange}
-            workOrderStatus={workOrderStatus}
-            stepCompletionStatus={stepCompletionStatus}
-          />
-        );
+        return null;
     }
   };
 
@@ -111,6 +256,7 @@ export default function App() {
           onStepChange={handleStepChange}
           workOrderStatus={workOrderStatus}
           stepCompletionStatus={stepCompletionStatus}
+          visiblePages={enabledPages}
         />
       </AppShell.Navbar>
       <AppShell.Main>

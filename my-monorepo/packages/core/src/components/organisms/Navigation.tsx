@@ -24,6 +24,7 @@ export interface NavigationProps {
   onStepChange?: (step: WorkOrderStep) => void;
   workOrderStatus?: "pending" | "ongoing" | "done";
   stepCompletionStatus?: Partial<Record<WorkOrderStep, boolean>>;
+  visiblePages?: NavigationPage[];
 }
 
 const mainNavItems = [
@@ -95,11 +96,19 @@ export function Navigation({
   onStepChange,
   workOrderStatus = "pending",
   stepCompletionStatus = {},
+  visiblePages,
 }: NavigationProps) {
   const [opened, { open, close }] = useDisclosure(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const isTablet = useMediaQuery("(min-width: 769px) and (max-width: 1199px)");
   const isDesktop = useMediaQuery("(min-width: 1200px)");
+
+  const allowedPages = new Set<NavigationPage>(
+    visiblePages ?? (mainNavItems.map((item) => item.id) as NavigationPage[])
+  );
+  const filteredMainNavItems = mainNavItems.filter((item) =>
+    allowedPages.has(item.id)
+  );
 
   const getStepStatus = (stepId: WorkOrderStep) => {
     if (stepCompletionStatus[stepId]) return "completed";
@@ -162,7 +171,7 @@ export function Navigation({
 
         <Drawer opened={opened} onClose={close} title="메뉴">
           <Stack gap="md">
-            {mainNavItems.map((item) => (
+            {filteredMainNavItems.map((item) => (
               <NavLink
                 key={item.id}
                 label={item.label}
@@ -195,7 +204,7 @@ export function Navigation({
       >
         <ScrollArea h="100%">
           <Stack gap="xs" p="md">
-            {mainNavItems.map((item) => (
+            {filteredMainNavItems.map((item) => (
               <NavLink
                 key={item.id}
                 label={
@@ -293,7 +302,7 @@ export function Navigation({
           </Text>
 
           <Stack gap="xs">
-            {mainNavItems.map((item) => (
+            {filteredMainNavItems.map((item) => (
               <NavLink
                 key={item.id}
                 label={item.label}
