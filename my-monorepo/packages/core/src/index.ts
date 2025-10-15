@@ -11,6 +11,9 @@ export * from "./util/ImageWithFallback";
 export * from "./components/organisms/Navigation";
 export * from "./components/organisms/UserHeader";
 
+// providers
+export * from "./providers/TenantProvider";
+
 //Context
 export * from "./components/organisms/modal/ModalManager";
 

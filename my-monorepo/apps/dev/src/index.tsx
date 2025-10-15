@@ -1,5 +1,5 @@
 import { ModalProvider } from "@core/context/modal/ModalContext";
-import { ModalManager, useApiNotification } from "@core/index";
+import { ModalManager, TenantProvider, useApiNotification } from "@core/index";
 
 import { MantineProvider } from "@mantine/core";
 import { DatesProvider } from "@mantine/dates";
@@ -33,17 +33,19 @@ const queryClient = new QueryClient({
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <MantineProvider defaultColorScheme="light">
-          <DatesProvider settings={{ locale: "ko" }}>
-            <ModalProvider>
-              <App />
-              <ModalManager />
-              <Notifications limit={1} />
-            </ModalProvider>
-          </DatesProvider>
-        </MantineProvider>
-      </QueryClientProvider>
+      <TenantProvider companyName="core">
+        <QueryClientProvider client={queryClient}>
+          <MantineProvider defaultColorScheme="light">
+            <DatesProvider settings={{ locale: "ko" }}>
+              <ModalProvider>
+                <App />
+                <ModalManager />
+                <Notifications limit={1} />
+              </ModalProvider>
+            </DatesProvider>
+          </MantineProvider>
+        </QueryClientProvider>
+      </TenantProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

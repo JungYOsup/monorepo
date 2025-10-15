@@ -1,26 +1,17 @@
-import WorkOrderCard from "@core/components/organisms/workOrderCard/WorkOrderCard";
+import {
+  WorkOrderCard,
+  WorkOrderData,
+} from "@core/components/organisms/WorkOrderCard";
 import { SimpleGrid } from "@mantine/core";
 
-interface WorkOrder {
-  id: string;
-  itemName: string;
-  workName: string;
-  quantity: string;
-  equipment: string;
-  dueDate: string;
-  status: string;
-  image: string;
-}
-
 interface WorkOrderGridProps {
-  filteredWorkOrders: WorkOrder[];
+  filteredWorkOrders: WorkOrderData[];
   resetFilters: () => void;
 }
 
 export default function WorkOrderGrid({
   filteredWorkOrders,
 }: WorkOrderGridProps) {
-  console.log(filteredWorkOrders, "filteredWorkOrders");
   return (
     <SimpleGrid
       cols={{ base: 1, sm: 2 }}
@@ -28,7 +19,7 @@ export default function WorkOrderGrid({
       style={{ maxWidth: "100%" }}
     >
       {filteredWorkOrders.map((order) => (
-        <WorkOrderCard key={order.id} {...order} />
+        <WorkOrderCard workOrder={order} key={order.id} />
       ))}
     </SimpleGrid>
   );
