@@ -1,25 +1,31 @@
+import { AuthLoginService } from "@core/hooks/services/login/authLoginService";
 import { PageConfig, TenantConfig } from "@core/tenant/types";
 
 export type CompanyName = "core" | "dev";
 
+const loginBase: PageConfig = {
+  display: true,
+  endpoint: "/login",
+  api: {
+    login: AuthLoginService.login,
+  },
+};
+
 const ordersListBase: PageConfig = {
   display: true,
   endpoint: "/orders",
-  columns: [],
   api: {},
 };
 
 const inventoryListBase: PageConfig = {
   display: true,
   endpoint: "/inventory",
-  columns: [],
   api: {},
 };
 
 const qualityResultsBase: PageConfig = {
   display: true,
   endpoint: "/quality-results",
-  columns: [],
   api: {},
 };
 
@@ -35,10 +41,11 @@ export const coreConfig: TenantConfig = {
 export const devConfig: TenantConfig = {
   companyName: "개발사",
   pages: {
+    login: { ...loginBase },
+
     "orders/list": {
       ...ordersListBase,
       endpoint: "/dev-orders",
-      columns: [],
       api: {},
     },
     "inventory/list": {

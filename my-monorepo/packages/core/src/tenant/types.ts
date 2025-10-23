@@ -1,5 +1,6 @@
 // packages/core/src/tenant/types.ts
 export type PageId =
+  | "login"
   | "orders/list"
   | "inventory/list"
   | "quality/results"
@@ -7,6 +8,7 @@ export type PageId =
 
 type ApiConfig = {
   list?: any;
+  login?: any;
 };
 
 type UISlots = {
@@ -19,7 +21,6 @@ type UISlots = {
 type UIOptions = {
   display: boolean;
   endpoint: string; // 공통 라우팅(표시용/타이틀)
-  columns?: Array<{ key: string; label: string; visible?: boolean }>;
   slots?: UISlots;
 };
 

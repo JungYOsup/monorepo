@@ -1,4 +1,5 @@
 import { useDefaultAuthHandler } from "@core/handlers/login/useDefaultAuthHandler";
+import { useTenantConfig } from "@core/providers/TenantProvider";
 import {
   Box,
   Button,
@@ -9,29 +10,28 @@ import {
   TextInput,
   Title,
 } from "@mantine/core";
+import { AuthLoginPostRequest } from "@sizlcorp/sizl-api-document/dist/models";
 import { IconLock, IconMail } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
-interface LoginData {
-  id: string;
-  password: string;
-}
-
 export function LoginForm() {
-  const { handleLogin } = useDefaultAuthHandler();
-  const [loginData, setLoginData] = useState<LoginData>({
-    id: "",
+  const tenant = useTenantConfig();
+  const loginFn = tenant?.pages?.login?.api.login;
+  const { handleLogin } = useDefaultAuthHandler(loginFn);
+
+  const [loginData, setLoginData] = useState<AuthLoginPostRequest>({
+    identifier: "",
     password: "",
   });
 
   const handleInputChange =
-    (field: keyof Omit<LoginData, "rememberMe">) =>
+    (field: keyof Omit<AuthLoginPostRequest, "rememberMe">) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setLoginData((prev) => ({ ...prev, [field]: e.target.value }));
     };
 
-  const isFormValid = loginData.id && loginData.password;
+  const isFormValid = loginData.identifier && loginData.password;
 
   return (
     <Box w="100%" maw={400} mx="auto">
@@ -57,8 +57,8 @@ export function LoginForm() {
                 placeholder="사번을 입력하세요"
                 leftSection={<IconMail size={16} />}
                 type="id"
-                value={loginData.id}
-                onChange={handleInputChange("id")}
+                value={loginData.identifier}
+                onChange={handleInputChange("identifier")}
                 required
                 size="md"
               />
