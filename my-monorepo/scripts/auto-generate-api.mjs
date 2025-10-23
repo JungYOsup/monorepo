@@ -4,13 +4,11 @@
 
   목적
   - `@core/instance/axios.ts`에 선언된 인스턴스를 기준으로, 연결된 API 클래스들을 스캔합니다.
-  - 각 API의 d.ts에서 메서드/요청 타입을 수집하여 리소스별 Query 모듈과 React Query 훅을 생성합니다.
+  - 각 API의 d.ts에서 메서드/요청 타입을 수집하여 리소스별 Query 모듈을 생성합니다.
   - 선택적으로 `@sizlcorp/sizl-api-document`를 최신으로 업데이트합니다.
 
   출력
   - `packages/core/src/api/<resource>/<Resource>Query.ts`
-  - `packages/core/src/hooks/api/<resource>/use<Resource>Query.ts`
-  - `packages/core/src/hooks/api/<resource>/use<Resource>Mutation.ts`
 
   실행 방법
   - 전체 자동 생성: npm run generate:document:auto
@@ -407,26 +405,8 @@ function writeFiles({ resource, instance, queries, mutations }) {
     kebabCase(resource)
   );
   const apiOutFile = path.join(apiOutDir, `${resource}Query.ts`);
-  const hooksOutDir = path.join(
-    repoRoot,
-    "packages",
-    "core",
-    "src",
-    "hooks",
-    "api",
-    kebabCase(resource)
-  );
-  const hooksOutFile = path.join(
-    hooksOutDir,
-    `use${pascalCase(resource)}Query.ts`
-  );
-  const hooksMutOutFile = path.join(
-    hooksOutDir,
-    `use${pascalCase(resource)}Mutation.ts`
-  );
 
   ensureDir(apiOutDir);
-  ensureDir(hooksOutDir);
 
   const importTypes = Array.from(
     new Set(
@@ -445,24 +425,9 @@ function writeFiles({ resource, instance, queries, mutations }) {
     mutations,
     importTypes,
   });
-  const hooksModule = queries.length
-    ? genHooksModule({ resource, queries })
-    : null;
-  const hooksMutationModule = mutations.length
-    ? genMutationHooksModule({ resource, mutations })
-    : null;
 
   fs.writeFileSync(apiOutFile, queryModule, "utf-8");
-  const outFiles = [apiOutFile];
-  if (hooksModule) {
-    fs.writeFileSync(hooksOutFile, hooksModule, "utf-8");
-    outFiles.push(hooksOutFile);
-  }
-  if (hooksMutationModule) {
-    fs.writeFileSync(hooksMutOutFile, hooksMutationModule, "utf-8");
-    outFiles.push(hooksMutOutFile);
-  }
-  return outFiles;
+  return [apiOutFile];
 }
 
 function main() {
@@ -473,7 +438,12 @@ function main() {
   const filterIdx = args.findIndex((a) => a === "--filter");
   const filter = filterIdx !== -1 ? (args[filterIdx + 1] || "").trim() : "";
   if (!noUpdate) {
-    updateSizlApiDocument();
+    try {
+      updateSizlApiDocument();
+    } catch (error) {
+      warn("Failed to update @sizlcorp/sizl-api-document:", error.message);
+      warn("Continuing with existing version.");
+    }
   } else {
     log("Skipping package update (--no-update)");
   }

@@ -6,10 +6,13 @@ import {
 } from "@lukemorales/query-key-factory";
 import {
   ScmApiPurchaseOrderCategoriesPurchaseOrderCategoryIdGetRequest,
+  ScmApiPurchaseOrderItemInvoiceUnitsPurchaseOrderItemInvoiceUnitIdGetRequest,
   ScmApiPurchaseOrderItemsPurchaseOrderItemIdGetRequest,
   ScmApiPurchaseOrdersPurchaseOrderIdGetRequest,
   ScmApiPurchaseOrderCategoriesPurchaseOrderCategoryIdDeleteRequest,
   ScmApiPurchaseOrderCategoriesPurchaseOrderCategoryIdPutRequest,
+  ScmApiPurchaseOrderItemInvoiceUnitsPurchaseOrderItemInvoiceUnitIdDeleteRequest,
+  ScmApiPurchaseOrderItemInvoiceUnitsPurchaseOrderItemInvoiceUnitIdPutRequest,
   ScmApiPurchaseOrderItemsPurchaseOrderItemIdDeleteRequest,
   ScmApiPurchaseOrderItemsPurchaseOrderItemIdPutRequest,
   ScmApiPurchaseOrdersPurchaseOrderIdDeleteRequest,
@@ -24,6 +27,12 @@ export const purchase = createQueryKeys(PURCHASE_QUERY_KEY, {
     return {
       queryKey: [params],
       queryFn: () => ScmInstance.purchaseOrderCategoriesPurchaseOrderCategoryIdGet(params),
+    };
+  },
+  purchaseOrderItemInvoiceUnitsPurchaseOrderItemInvoiceUnitIdGet: (params: ScmApiPurchaseOrderItemInvoiceUnitsPurchaseOrderItemInvoiceUnitIdGetRequest) => {
+    return {
+      queryKey: [params],
+      queryFn: () => ScmInstance.purchaseOrderItemInvoiceUnitsPurchaseOrderItemInvoiceUnitIdGet(params),
     };
   },
   purchaseOrderItemsPurchaseOrderItemIdGet: (params: ScmApiPurchaseOrderItemsPurchaseOrderItemIdGetRequest) => {
@@ -51,6 +60,18 @@ export const purchaseMutate = createMutationKeys(PURCHASE_QUERY_KEY, {
     return {
       mutationKey: [params],
       mutationFn: () => ScmInstance.purchaseOrderCategoriesPurchaseOrderCategoryIdPut(params),
+    };
+  },
+  purchaseOrderItemInvoiceUnitsPurchaseOrderItemInvoiceUnitIdDelete: (params: ScmApiPurchaseOrderItemInvoiceUnitsPurchaseOrderItemInvoiceUnitIdDeleteRequest) => {
+    return {
+      mutationKey: [params],
+      mutationFn: () => ScmInstance.purchaseOrderItemInvoiceUnitsPurchaseOrderItemInvoiceUnitIdDelete(params),
+    };
+  },
+  purchaseOrderItemInvoiceUnitsPurchaseOrderItemInvoiceUnitIdPut: (params: ScmApiPurchaseOrderItemInvoiceUnitsPurchaseOrderItemInvoiceUnitIdPutRequest) => {
+    return {
+      mutationKey: [params],
+      mutationFn: () => ScmInstance.purchaseOrderItemInvoiceUnitsPurchaseOrderItemInvoiceUnitIdPut(params),
     };
   },
   purchaseOrderItemsPurchaseOrderItemIdDelete: (params: ScmApiPurchaseOrderItemsPurchaseOrderItemIdDeleteRequest) => {
